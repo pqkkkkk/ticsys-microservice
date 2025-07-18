@@ -12,7 +12,6 @@ import org.pqkkkkk.ticsys.event_service.model.Event;
 import org.pqkkkkk.ticsys.event_service.model.Ticket;
 import org.pqkkkkk.ticsys.event_service.service.EventService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,7 +33,7 @@ public class EventController {
         this.eventService = eventService;
     }
     @PostMapping
-    @PreAuthorize("hasAnyRole('ADMIN','ORGANIZER')")
+    //@PreAuthorize("hasAnyRole('ADMIN','ORGANIZER')")
     public ResponseEntity<EventResponse> CreateEvent(@RequestParam("event") String eventJson,
                                         @RequestParam("tickets") String ticketsJson,
                                         @RequestParam("banner") MultipartFile banner,

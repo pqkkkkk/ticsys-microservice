@@ -1,0 +1,39 @@
+spring:
+    application:
+        name: api-gateway
+    cloud:
+        gateway:
+            discovery:
+                locator:
+                    enabled: true
+                    lower-case-service-id: true
+            routes:
+                - id: ticsys-service
+                  uri: lb://TICSYS-SERVICE  # Load balancing with service discovery
+                  predicates:
+                    - Path=/api/account/**, /api/order/**
+                - id: event-service
+                  uri: lb://event-service
+                  predicates:
+                    - Path=/api/event/**
+                - id: promotion-service
+                  uri: lb://PROMOTION-SERVICE
+                  predicates:
+                    - Path=/api/promotion/**
+# Eureka client configuration
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka  # This is required
+    register-with-eureka: true
+    fetch-registry: true
+  instance:
+    prefer-ip-address: true
+
+server:
+    port: 8081
+
+logging:
+    level:
+        '[org.springframework.cloud.gateway]': DEBUG
+        '[org.springframework.cloud.netflix.eureka]': DEBUG

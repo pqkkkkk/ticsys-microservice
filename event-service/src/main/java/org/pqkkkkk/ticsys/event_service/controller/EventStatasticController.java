@@ -6,7 +6,6 @@ import org.pqkkkkk.ticsys.event_service.dto.response.TimelyEventRevenueResponse;
 import org.pqkkkkk.ticsys.event_service.dto.response.TimelyEventTicketCountResponse;
 import org.pqkkkkk.ticsys.event_service.service.EventService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +22,7 @@ public class EventStatasticController {
         this.eventService = eventService;
     }
     @GetMapping("/revenue")
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<TimelyEventRevenueResponse> GetRevenueOfAllEvents(@RequestParam (required = false) String eventCategory,
                                                   @RequestParam(required = true, value = "startDate") String startDateString,
                                                   @RequestParam(required = true,value = "endDate") String endDateString,
@@ -42,7 +41,7 @@ public class EventStatasticController {
         }
     }
     @GetMapping("/ticketCount")
-    @PreAuthorize("hasRole('ADMIN')")
+    //@PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<TimelyEventTicketCountResponse> GetTicketCountOfAllEvents(@RequestParam (required = false) String eventCategory,
                                                   @RequestParam(required = true, value = "startDate") String startDateString,
                                                   @RequestParam(required = true,value = "endDate") String endDateString,
@@ -58,7 +57,7 @@ public class EventStatasticController {
         }
     }
     @GetMapping("/revenue/{eventId}")
-    @PreAuthorize("hasRole('ADMIN') or @eventSecurityService.CheckEventOwner(#eventId)")
+    //@PreAuthorize("hasRole('ADMIN') or @eventSecurityService.CheckEventOwner(#eventId)")
     public ResponseEntity<?> GetRevenueOfSpecificEvent(@PathVariable Integer eventId,
                                                   @RequestParam(required = false) Integer ticketTypeId,
                                                   @RequestParam(required = true, value = "startDate") String startDateString,
@@ -82,7 +81,7 @@ public class EventStatasticController {
         }
     }
     @GetMapping("/ticketCount/{eventId}")
-    @PreAuthorize("hasRole('ADMIN') or @eventSecurityService.CheckEventOwner(#eventId)")
+    //@PreAuthorize("hasRole('ADMIN') or @eventSecurityService.CheckEventOwner(#eventId)")
     public ResponseEntity<TimelyEventTicketCountResponse> GetTicketCountOfSpecificEvent(@PathVariable Integer eventId,
                                                   @RequestParam(required = false) Integer ticketTypeId,
                                                   @RequestParam(required = true, value = "startDate") String startDateString,

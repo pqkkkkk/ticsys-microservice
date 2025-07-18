@@ -1,0 +1,23 @@
+spring:
+    application:
+        name: event-service
+    datasource:
+        url: jdbc:sqlserver://localhost:1433;databaseName=ticsys;encrypt=false;trustServerCertificate=true;
+        username: sa
+        password: SqlServer@123
+        driverClassName: com.microsoft.sqlserver.jdbc.SQLServerDriver
+
+server:
+    port: 8082
+
+eureka:
+    client:
+        serviceUrl:
+            defaultZone: http://localhost:8761/eureka/
+        register-with-eureka: true
+        fetch-registry: true
+    instance:
+        prefer-ip-address: true
+        hostname: localhost
+        ip-address: 127.0.0.1
+        instanceId: ${spring.application.name}:${spring.application.instance_id:${random.value}}

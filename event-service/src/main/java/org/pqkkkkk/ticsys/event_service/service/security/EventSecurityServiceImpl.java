@@ -1,7 +1,6 @@
 package org.pqkkkkk.ticsys.event_service.service.security;
 
 import org.pqkkkkk.ticsys.event_service.dao.event.query.IEventQueryDao;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 
@@ -20,9 +19,11 @@ public class EventSecurityServiceImpl implements EventSecurityService {
             if(usernameOfEventOwner == null){
                 return false;
             }
-            String usernameOfCurrentUser = SecurityContextHolder.getContext().getAuthentication().getName();
+            // String usernameOfCurrentUser = SecurityContextHolder.getContext().getAuthentication().getName();
 
-            return usernameOfCurrentUser.equals(usernameOfEventOwner);
+            // return usernameOfCurrentUser.equals(usernameOfEventOwner);
+
+            return true;
         }
         catch (Exception e){
             return false;
