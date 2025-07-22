@@ -15,11 +15,20 @@ spring:
                 - id: event-service
                   uri: lb://event-service
                   predicates:
-                    - Path=/api/event/**
+                    - Path=/api/v1/event/**
                 - id: promotion-service
                   uri: lb://PROMOTION-SERVICE
                   predicates:
-                    - Path=/api/promotion/**
+                    - Path=/api/v1/promotion/**
+                - id: identity-service
+                  uri: lb://identity-service
+                  predicates:
+                    - Path=/api/v1/auth/**
+    security:
+      oauth2:
+        resourceserver:
+          jwt:
+            jwk-set-uri: http://localhost:8085/jwks
 # Eureka client configuration
 eureka:
   client:
@@ -37,3 +46,4 @@ logging:
     level:
         '[org.springframework.cloud.gateway]': DEBUG
         '[org.springframework.cloud.netflix.eureka]': DEBUG
+        '[org.springframework.security]': DEBUG

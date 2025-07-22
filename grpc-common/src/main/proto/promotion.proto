@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package org.pqkkkk.ticsys.grpc.promotion;
+
+option java_multiple_files = true;
+option java_package = "org.pqkkkk.ticsys.grpc.promotion";
+option java_outer_classname = "PromotionServiceProto";
+
+// Service definition
+service PromotionService {
+    rpc ValidatePromotion(ValidatePromotionRequest) returns (ValidatePromotionResponse);
+    rpc UpdatePromotionInventory(UpdatePromotionInventoryRequest) returns (UpdatePromotionInventoryResponse);
+}

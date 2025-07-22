@@ -1,0 +1,6 @@
+spring:
+    application:
+        name: promotion-service
+
+server:
+    port: 8083

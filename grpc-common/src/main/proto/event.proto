@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package org.pqkkkk.ticsys.grpc.event;
+
+option java_multiple_files = true;
+option java_package = "org.pqkkkk.ticsys.grpc.event";
+option java_outer_classname = "EventServiceProto";
+
+// Service definition
+service EventService {
+    rpc ValidateEvent(ValidateEventRequest) returns (ValidateEventResponse);
+    rpc ValidateTicketQuantity(ValidateTicketQuantityRequest) returns (ValidateTicketQuantityResponse);
+    rpc UpdateTicketInventory(UpdateTicketInventoryRequest) returns (UpdateTicketInventoryResponse);
+}

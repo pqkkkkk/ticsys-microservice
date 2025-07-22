@@ -1,0 +1,6 @@
+spring:
+    profiles:
+        active: integration
+
+server:
+    port: 8085

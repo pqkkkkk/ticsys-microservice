@@ -1,0 +1,12 @@
+syntax = "proto3";
+
+package org.pqkkkk.ticsys.grpc.user;
+
+option java_multiple_files = true;
+option java_package = "org.pqkkkk.ticsys.grpc.user";
+option java_outer_classname = "UserServiceProto";
+
+// Service definition
+service UserService {
+    rpc ValidateUser(ValidateUserRequest) returns (ValidateUserResponse);
+}
