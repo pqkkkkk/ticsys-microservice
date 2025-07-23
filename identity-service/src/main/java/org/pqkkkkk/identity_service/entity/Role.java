@@ -2,15 +2,17 @@ package org.pqkkkkk.identity_service.entity;
 
 import java.util.List;
 
+import org.pqkkkkk.identity_service.Constants.RoleEnum;
 import org.springframework.security.core.GrantedAuthority;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -20,7 +22,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 @Entity
-@Table(name = "ticsys_role_db")
+@Table(name = "ticsys_identity_service_role_table")
 @Data
 @Builder
 @AllArgsConstructor
@@ -34,16 +36,14 @@ public class Role implements GrantedAuthority {
     Long roleId;
 
     @Column(name = "role_name", unique = true, nullable = false)
-    String name;
+    @Enumerated(EnumType.STRING)
+    RoleEnum name;
     
-    @ManyToMany
-    @JoinTable(name = "ticsys_user_role_db",
-               joinColumns = @JoinColumn(name = "role_id"),
-                inverseJoinColumns = @JoinColumn(name = "user_id"))
+    @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
     List<User> users;
 
     @Override
     public String getAuthority() {
-        return name;
+        return name.name();
     }
 }

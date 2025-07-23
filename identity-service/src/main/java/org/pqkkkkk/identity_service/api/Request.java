@@ -2,9 +2,11 @@ package org.pqkkkkk.identity_service.api;
 
 import java.util.Date;
 
+import org.pqkkkkk.identity_service.Constants.GenderEnum;
 import org.pqkkkkk.identity_service.entity.User;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 public class Request {
@@ -31,10 +33,10 @@ public class Request {
         String fullName,
         @NotBlank
         String phoneNumber,
-        @NotBlank
+        @NotNull
         Date birthday,
-        @NotBlank
-        String gender
+        @NotNull
+        GenderEnum gender
     ){
         public static User toUser(SignUpRequest request){
             return User.builder()
@@ -44,7 +46,7 @@ public class Request {
                 .fullName(request.fullName())
                 .phoneNumber(request.phoneNumber())
                 .birthday(request.birthday())
-                .gender(request.gender())
+                .gender(request.gender().name())
                 .build();
         }
     }

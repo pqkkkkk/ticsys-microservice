@@ -67,9 +67,9 @@ public class AuthServiceImpl implements AuthService {
         return prepareCreatedUser(createdUser);
     }
     private void checkUserExists(String username){
-        User existingUser = userService.getUserByUserName(username);
-
         try{
+            User existingUser = userService.getUserByUserName(username);
+
             if(existingUser != null){
                 throw new ExistedUserException("User already exists with username: " + username);
             }
@@ -82,6 +82,10 @@ public class AuthServiceImpl implements AuthService {
                 .userName(user.getUserName())
                 .passWord(null)
                 .email(user.getEmail())
+                .phoneNumber(user.getPhoneNumber())
+                .birthday(user.getBirthday())
+                .gender(user.getGender())
+                .roles(user.getRoles())
                 .fullName(user.getFullName())
                 .build();
     }

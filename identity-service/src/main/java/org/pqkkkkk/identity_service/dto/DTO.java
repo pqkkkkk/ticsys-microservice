@@ -13,7 +13,7 @@ public class DTO {
         String name
     ){
         public static RoleDTO from(Role role){
-            return new RoleDTO(role.getRoleId(), role.getName());
+            return new RoleDTO(role.getRoleId(), role.getName().name());
         }
     }
     public record OrganizerInfoDTO(
@@ -39,9 +39,10 @@ public class DTO {
         OrganizerInfoDTO organizerInfo
     ){
         public static UserDTO from(User user){
-            List<RoleDTO> roleDTOs = user.getRoles().stream()
+            List<RoleDTO> roleDTOs = user.getRoles() != null ? user.getRoles().stream()
                 .map(RoleDTO::from)
-                .toList();
+                .toList() : List.of();
+                
             OrganizerInfoDTO organizerInfoDTO = user.getOrganizerInfo() != null ? OrganizerInfoDTO.from(user.getOrganizerInfo()) : null;
             return new UserDTO(
                 user.getUserId(),

@@ -1,14 +1,18 @@
 package org.pqkkkkk.identity_service.entity;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -18,7 +22,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "ticsys_user_db")
+@Table(name = "ticsys_identity_service_user_table")
 @Data
 @Builder
 @AllArgsConstructor
@@ -47,8 +51,13 @@ public class User {
     private String gender;
     private String avatarPath;
 
-    @ManyToMany(mappedBy = "users", fetch = FetchType.EAGER)
-    private List<Role> roles;
+     @ManyToMany(fetch = FetchType.LAZY,
+                cascade = {CascadeType.MERGE})
+    @JoinTable(name = "ticsys_identity_service_user_role_table",
+               joinColumns = @JoinColumn(name = "user_id"),
+               inverseJoinColumns = @JoinColumn(name = "role_id"))
+    @Builder.Default
+    private List<Role> roles = new ArrayList<>();
 
     @OneToOne(mappedBy = "user", fetch = FetchType.EAGER)
     private OrganizerInfo organizerInfo;

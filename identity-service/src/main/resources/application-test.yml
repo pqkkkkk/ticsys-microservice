@@ -7,7 +7,7 @@ spring:
         password: pqkiet854
         driver-class-name: org.postgresql.Driver
     jpa:
-        hibernate.ddl-auto: create-drop  # Để tự động tạo/xóa schema cho test
+        hibernate.ddl-auto: update
         show-sql: true
         properties:
             hibernate:

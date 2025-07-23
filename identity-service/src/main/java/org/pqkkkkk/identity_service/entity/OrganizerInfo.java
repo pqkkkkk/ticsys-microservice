@@ -13,7 +13,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "ticsys_organizer_info_db")
+@Table(name = "ticsys_identity_service_organizer_info_table")
 @Data
 @Builder
 @AllArgsConstructor
