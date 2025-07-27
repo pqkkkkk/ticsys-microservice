@@ -17,6 +17,10 @@ public class Request {
         @NotBlank
         String password) {
     }
+    public record SignInWithThirdPartyRequest(
+        @NotBlank
+        String idToken) {
+    }
 
     public record RefreshTokenRequest(
         @NotBlank
@@ -50,4 +54,10 @@ public class Request {
                 .build();
         }
     }
+    public record OTPRequest(
+        @NotBlank
+        String email,
+        @NotBlank
+        String otpCode
+    ){}
 }

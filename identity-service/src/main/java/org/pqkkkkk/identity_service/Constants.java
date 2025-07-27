@@ -4,6 +4,12 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public class Constants {
+    public enum UserStatus{
+        ACTIVE,
+        INACTIVE,
+        PENDING,
+        BANNED;
+    }
     public enum RoleEnum{
         USER,
         ORGANIZER,

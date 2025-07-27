@@ -21,4 +21,9 @@ public class UserJpaDao implements UserDao {
     public User getUserByUserName(String userName) {
         return userRepository.findByUserName(userName);
     }
+
+    @Override
+    public User getUserByEmail(String email) {
+        return userRepository.findByEmail(email);
+    }
 }

@@ -13,4 +13,5 @@ public interface UserService {
      * @throws UserNotFoundException
      */
     public User getUserByUserName(String username);
+    public User getUserByEmail(String email);
 }
