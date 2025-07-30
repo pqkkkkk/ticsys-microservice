@@ -12,3 +12,27 @@ service EventService {
     rpc ValidateTicketQuantity(ValidateTicketQuantityRequest) returns (ValidateTicketQuantityResponse);
     rpc UpdateTicketInventory(UpdateTicketInventoryRequest) returns (UpdateTicketInventoryResponse);
 }
+
+message ValidateEventRequest {
+    string event_id = 1;
+}
+message ValidateEventResponse {
+    bool is_valid = 1;
+    string message = 2; // Additional information if needed
+}
+message ValidateTicketQuantityRequest {
+    string event_id = 1;
+    int32 requested_quantity = 2;
+}
+message ValidateTicketQuantityResponse {
+    bool is_valid = 1;
+    string message = 2; // Additional information if needed
+}
+message UpdateTicketInventoryRequest {
+    string event_id = 1;
+    int32 quantity_change = 2; // Positive for addition, negative for subtraction
+}
+message UpdateTicketInventoryResponse {
+    bool success = 1;
+    string message = 2; // Additional information if needed
+}

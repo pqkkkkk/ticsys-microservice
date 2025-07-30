@@ -18,26 +18,15 @@
     <name>TICSYS</name>
 
     <modules>
-        <module>api-gateway</module>
-        <module>discovery-server</module>
-        <module>event-service</module>
-        <module>identity-service</module>
-        <module>order-service</module>
-        <module>promotion-service</module>
         <module>grpc-common</module>
+        <module>discovery-server</module>
+        <module>api-gateway</module>
+        <module>identity-service</module>
+        <module>notification-service</module>
+        <!-- <module>event-service</module>
+        <module>order-service</module>
+        <module>promotion-service</module> -->
     </modules>
-
-    <!-- <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-dependencies</artifactId>
-                <version>3.4.7</version>
-                <scope>import</scope>
-                <type>pom</type>
-            </dependency>
-        </dependencies>
-    </dependencyManagement> -->
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>

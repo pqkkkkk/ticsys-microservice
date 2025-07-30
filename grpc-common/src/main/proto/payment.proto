@@ -10,3 +10,17 @@ option java_outer_classname = "PaymentServiceProto";
 service PaymentService {
     rpc ProcessPayment(ProcessPaymentRequest) returns (ProcessPaymentResponse);
 }
+
+// Request message for processing a payment
+message ProcessPaymentRequest {
+    string user_id = 1; // Unique identifier for the user
+    string payment_method = 2; // Payment method (e.g., credit card, PayPal)
+    double amount = 3; // Amount to be charged
+    string currency = 4; // Currency code (e.g., USD, EUR)
+}
+// Response message for processing a payment
+message ProcessPaymentResponse {
+    bool success = 1; // Indicates if the payment was successful
+    string transaction_id = 2; // Unique identifier for the transaction
+    string message = 3; // Additional message or error description
+}
