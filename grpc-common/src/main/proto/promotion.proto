@@ -11,3 +11,22 @@ service PromotionService {
     rpc ValidatePromotion(ValidatePromotionRequest) returns (ValidatePromotionResponse);
     rpc UpdatePromotionInventory(UpdatePromotionInventoryRequest) returns (UpdatePromotionInventoryResponse);
 }
+
+// Request and response messages for ValidatePromotion
+message ValidatePromotionRequest {
+    string promotion_code = 1; // The promotion code to validate
+}
+message ValidatePromotionResponse {
+    bool is_valid = 1; // Indicates if the promotion code is valid
+    string message = 2; // Additional message, e.g., error description if invalid
+}
+// Request and response messages for UpdatePromotionInventory
+message UpdatePromotionInventoryRequest {
+    string promotion_code = 1; // The promotion code for which inventory is being updated
+    int32 quantity = 2; // The quantity to update the inventory by (can be positive or negative)
+}
+
+message UpdatePromotionInventoryResponse {
+    bool success = 1; // Indicates if the inventory update was successful
+    string message = 2; // Additional message, e.g., error description if the update failed
+}

@@ -1,0 +1,21 @@
+syntax = "proto3";
+
+package org.pqkkkk.ticsys.grpc.notification;
+
+option java_multiple_files = true;
+option java_package = "org.pqkkkk.ticsys.grpc.notification";
+option java_outer_classname = "NotificationServiceProto";
+
+service NotificationService {
+    rpc SendOTPVerificationCode(SendOTPVerificationCodeRequest) returns (SendOTPVerificationCodeResponse);
+}
+
+message SendOTPVerificationCodeRequest{
+    string email = 1;
+    string otpCode = 2;
+}
+
+message SendOTPVerificationCodeResponse{
+    bool success = 1;
+    string message = 2;
+}
