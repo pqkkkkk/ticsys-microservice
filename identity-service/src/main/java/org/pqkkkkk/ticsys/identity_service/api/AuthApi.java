@@ -14,7 +14,6 @@ import org.pqkkkkk.ticsys.identity_service.api.Request.SignUpRequest;
 import org.pqkkkkk.ticsys.identity_service.api.Response.ApiResponse;
 import org.pqkkkkk.ticsys.identity_service.dto.BusinessResult.RefreshTokenResult;
 import org.pqkkkkk.ticsys.identity_service.dto.BusinessResult.SignInResult;
-import org.pqkkkkk.ticsys.identity_service.dto.BusinessResult.SignUpWithThirdPartyResult;
 import org.pqkkkkk.ticsys.identity_service.dto.DTO.UserDTO;
 import org.pqkkkkk.ticsys.identity_service.entity.User;
 import org.pqkkkkk.ticsys.identity_service.service.AuthService;
@@ -60,10 +59,11 @@ public class AuthApi {
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
     @PostMapping("/signup/with-google")
-    public ResponseEntity<ApiResponse<SignUpWithThirdPartyResult>> signUpWithGoogle(@Valid @RequestBody SignUpRequest request) {
+    public ResponseEntity<ApiResponse<UserDTO>> signUpWithGoogle(@Valid @RequestBody SignUpRequest request) {
         User user = SignUpRequest.toUser(request);
-        SignUpWithThirdPartyResult result = thirdPartyAuthService.HandleSignUpWithGoogleRequest(user);
-        ApiResponse<SignUpWithThirdPartyResult> response = new ApiResponse<>(result, true, HttpStatus.OK.value(), "successful");
+        user = thirdPartyAuthService.HandleSignUpWithGoogleRequest(user);
+        UserDTO userDTO = UserDTO.from(user);
+        ApiResponse<UserDTO> response = new ApiResponse<>(userDTO, true, HttpStatus.OK.value(), "successful");
 
         return ResponseEntity.ok(response);
     }

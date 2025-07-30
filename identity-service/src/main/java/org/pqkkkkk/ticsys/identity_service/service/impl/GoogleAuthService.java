@@ -3,7 +3,6 @@ package org.pqkkkkk.ticsys.identity_service.service.impl;
 import org.pqkkkkk.ticsys.identity_service.Constants.UserStatus;
 import org.pqkkkkk.ticsys.identity_service.client.notification.NotificationClient;
 import org.pqkkkkk.ticsys.identity_service.dto.BusinessResult.SignInResult;
-import org.pqkkkkk.ticsys.identity_service.dto.BusinessResult.SignUpWithThirdPartyResult;
 import org.pqkkkkk.ticsys.identity_service.dto.DTO.UserDTO;
 import org.pqkkkkk.ticsys.identity_service.entity.User;
 import org.pqkkkkk.ticsys.identity_service.exception.ExistedUserException;
@@ -20,6 +19,8 @@ import org.springframework.stereotype.Service;
 
 import com.google.api.client.auth.openidconnect.IdToken.Payload;
 import com.google.api.client.googleapis.auth.oauth2.GoogleIdToken;
+
+import jakarta.transaction.Transactional;
 
 
 @Service
@@ -76,7 +77,8 @@ public class GoogleAuthService implements ThirdPartyAuthService {
     }
 
     @Override
-    public SignUpWithThirdPartyResult HandleSignUpWithGoogleRequest(User user) {
+    @Transactional
+    public User HandleSignUpWithGoogleRequest(User user) {
         // Check if user already exists
         if (userService.isUserExists(user)) {
             throw new ExistedUserException(
@@ -85,7 +87,8 @@ public class GoogleAuthService implements ThirdPartyAuthService {
 
         // Save user to database with status as PENDING
         user.setStatus(UserStatus.PENDING);
-        userService.addUser(user);
+        user.setPassWord(passwordEncoder.encode(user.getPassWord()));
+        user = userService.addUser(user);
 
         // Create OTP code
         String otpCode = otpUtils.generateOTP(user.getEmail());
@@ -93,7 +96,7 @@ public class GoogleAuthService implements ThirdPartyAuthService {
         // Call to notification service to send OTP code
         notificationClient.sendOTPCodeVerification(user.getEmail(), otpCode);
 
-        return new SignUpWithThirdPartyResult(otpCode);
+        return user;
     }
 
     @Override

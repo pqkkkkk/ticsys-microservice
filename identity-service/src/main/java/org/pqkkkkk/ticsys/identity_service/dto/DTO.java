@@ -35,6 +35,7 @@ public class DTO {
         Date birthday,
         String gender,
         String avatarPath,
+        String status,
         List<RoleDTO> roles,
         OrganizerInfoDTO organizerInfo
     ){
@@ -54,6 +55,7 @@ public class DTO {
                 user.getBirthday(),
                 user.getGender(),
                 user.getAvatarPath(),
+                user.getStatus() != null ? user.getStatus().name() : null,
                 roleDTOs,
                 organizerInfoDTO
             );

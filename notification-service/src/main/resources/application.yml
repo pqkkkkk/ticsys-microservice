@@ -12,9 +12,10 @@ spring:
                     auth: true
                     starttls:
                         enable: true
-    grpc:
-        server:
-            port: 9091
+grpc:
+    server:
+        port: 9091
+
 server:
   port: 8090
 
@@ -31,4 +32,4 @@ eureka:
         ip-address: 127.0.0.1
         instanceId: ${spring.application.name}:${spring.application.instance_id:${random.value}}
         metadata-map:
-            grpc.port: "${spring.grpc.server.port}"
+            grpc.port: "${grpc.server.port}"

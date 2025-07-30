@@ -4,13 +4,13 @@ import org.pqkkkk.ticsys.grpc.notification.SendOTPVerificationCodeRequest;
 import org.pqkkkk.ticsys.grpc.notification.SendOTPVerificationCodeResponse;
 
 import io.grpc.stub.StreamObserver;
+import net.devh.boot.grpc.server.service.GrpcService;
 
 import org.pqkkkk.ticsys.grpc.notification.NotificationServiceGrpc.NotificationServiceImplBase;
 import org.pqkkkkk.notification_service.entity.EmailDetails;
 import org.pqkkkkk.notification_service.service.EmailService;
-import org.springframework.stereotype.Service;
 
-@Service
+@GrpcService
 public class NotificationServiceImpl extends NotificationServiceImplBase {
     private final EmailService emailService;
 
