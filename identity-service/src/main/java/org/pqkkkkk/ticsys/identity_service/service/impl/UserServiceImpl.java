@@ -7,6 +7,7 @@ import org.pqkkkkk.ticsys.identity_service.entity.User;
 import org.pqkkkkk.ticsys.identity_service.exception.UserNotFoundException;
 import org.pqkkkkk.ticsys.identity_service.service.RoleService;
 import org.pqkkkkk.ticsys.identity_service.service.UserService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import jakarta.transaction.Transactional;
@@ -15,10 +16,12 @@ import jakarta.transaction.Transactional;
 public class UserServiceImpl implements UserService {
     private final UserDao userDao;
     private final RoleService roleService;
+    private final PasswordEncoder passwordEncoder;
 
-    public UserServiceImpl(UserDao userDao, RoleService roleService) {
+    public UserServiceImpl(UserDao userDao, RoleService roleService, PasswordEncoder passwordEncoder) {
         this.userDao = userDao;
         this.roleService = roleService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
@@ -26,6 +29,8 @@ public class UserServiceImpl implements UserService {
     public User addUser(User user) {
         assignDefaultRole(user);
 
+        user.setPassWord(passwordEncoder.encode(user.getPassWord())); // encode password
+        
         return userDao.addUser(user);
     }
     @Override
@@ -48,24 +53,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByUserName(String userName) {
-        User user = userDao.getUserByUserName(userName);
-
-        if(user == null){
-            throw new UserNotFoundException("User not found with username: " + userName);
-        }
-        
-        return user;
+        return userDao.getUserByUserName(userName);
     }
 
     @Override
     public User getUserByEmail(String email) {
-        User user = userDao.getUserByEmail(email);
-
-        if(user == null){
-            throw new UserNotFoundException("User not found with email: " + email);
-        }
-        
-        return user;
+        return userDao.getUserByEmail(email);
     }
     @Override
     public boolean isUserExists(User user) {

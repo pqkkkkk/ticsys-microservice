@@ -1,4 +1,4 @@
-package org.pqkkkkk.ticsys.identity_service.api;
+package org.pqkkkkk.ticsys.identity_service.dto;
 
 import java.util.Date;
 
@@ -10,14 +10,14 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 public class Request {
-    public record SignInRequest(
+    public record UsernamePasswordAuthRequest(
         @NotBlank
         String username,
 
         @NotBlank
         String password) {
     }
-    public record SignInWithThirdPartyRequest(
+    public record GoogleAuthRequest(
         @NotBlank
         String idToken) {
     }
@@ -54,10 +54,14 @@ public class Request {
                 .build();
         }
     }
-    public record OTPRequest(
+    public record VerifyOTPRequest(
         @NotBlank
         String email,
         @NotBlank
         String otpCode
+    ){}
+    public record SendOTPRequest(
+        @NotBlank
+        String email
     ){}
 }
