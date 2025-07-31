@@ -3,12 +3,14 @@ package org.pqkkkkk.ticsys.identity_service.exception.handler;
 import org.pqkkkkk.ticsys.identity_service.api.Response.ApiResponse;
 import org.pqkkkkk.ticsys.identity_service.exception.InValidGoogleIdTokenException;
 import org.pqkkkkk.ticsys.identity_service.exception.InvalidOTPException;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 @ControllerAdvice
+@Order(1)
 public class GoogleAuthExceptionHandler {
 
     @ExceptionHandler(InValidGoogleIdTokenException.class)

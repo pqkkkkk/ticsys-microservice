@@ -9,7 +9,7 @@ import io.grpc.ManagedChannel;
 
 public class NotificationServiceClient {
     public static void main(String[] args){
-        ManagedChannel channel = io.grpc.ManagedChannelBuilder.forAddress("localhost", 9090)
+        ManagedChannel channel = io.grpc.ManagedChannelBuilder.forAddress("localhost", 9091)
                 .usePlaintext()
                 .build();
 
