@@ -1,0 +1,44 @@
+spring:
+    application:
+        name: event-service
+    datasource:
+        url: jdbc:postgresql://localhost:5432/ticsys_event_service_db
+        username: postgres
+        password: pqkiet854
+        driver-class-name: org.postgresql.Driver
+    jpa:
+        hibernate.ddl-auto: update
+        show-sql: true
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.PostgreSQLDialect
+server:
+    port: 8082
+
+logging:
+    level:
+        root: INFO
+        '[org.springframework.security]': DEBUG
+        
+    
+eureka:
+    client:
+        serviceUrl:
+            defaultZone: http://localhost:8761/eureka/
+        register-with-eureka: true
+        fetch-registry: true
+    instance:
+        prefer-ip-address: true
+        hostname: localhost
+        ip-address: 127.0.0.1
+        instanceId: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+
+grpc:
+    client:
+        notification-service:
+            negotiationType: plaintext
+            enableKeepAlive: true
+            discovery:
+                enabled: true
+                selector: metadata
+                metadataKey: grpc.port

@@ -3,7 +3,7 @@ package org.pqkkkkk.ticsys.event_service.dao.ticket;
 import java.util.List;
 import java.util.Map;
 
-import org.pqkkkkk.ticsys.event_service.model.Ticket;
+import org.pqkkkkk.ticsys.event_service.entity.Ticket;
 
 public interface ITicketDao {
     boolean AddTicket(Ticket ticket);
