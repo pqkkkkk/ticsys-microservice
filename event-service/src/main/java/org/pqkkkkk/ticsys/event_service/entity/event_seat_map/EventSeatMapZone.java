@@ -64,6 +64,6 @@ public class EventSeatMapZone {
     @OneToMany(mappedBy = "eventSeatMapZone", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     List<ZoneCustomShape> zoneCustomShapes;
 
-    @OneToMany(mappedBy = "eventSeatMapZone", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    List<ZoneRectangleShape> zoneRectangleShapes;
+    @OneToOne(mappedBy = "eventSeatMapZone", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    ZoneRectangleShape zoneRectangleShape;
 }

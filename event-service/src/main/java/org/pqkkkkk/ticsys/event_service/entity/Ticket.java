@@ -60,4 +60,6 @@ public class Ticket {
     @JoinColumn(name = "event_date_id", nullable = false)
     EventDate eventDate;
 
+    
+
 }

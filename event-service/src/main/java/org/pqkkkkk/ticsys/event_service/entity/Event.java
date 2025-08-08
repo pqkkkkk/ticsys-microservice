@@ -43,19 +43,22 @@ public class Event {
     @Column(name = "event_id")
     Long eventId;
 
+    @Column(name = "user_id", nullable =  false)
+    Long userId;
+
     @Column(name = "event_name", nullable = false, length = 100)
     String eventName;
 
     @Column(name = "event_description", length = 500)
     String eventDescription;
 
-    @Column(name = "event_banner", nullable = false)
+    @Column(name = "event_banner", nullable = true)
     String eventBanner;
 
     @Column(name = "event_status")
     @Enumerated(EnumType.STRING)
     @Builder.Default
-    EventStatus eventStatus = EventStatus.PENDING;
+    EventStatus eventStatus = EventStatus.DRAFT;
 
     @Column(name = "event_category")
     @Enumerated(EnumType.STRING)
@@ -64,18 +67,12 @@ public class Event {
 
     @Column(name = "event_visibility")
     @Enumerated(EnumType.STRING)
-    @Builder.Default
-    EventVisibility eventVisibility = EventVisibility.PUBLIC;
+    EventVisibility eventVisibility;
 
     @Column(name = "event_location_type")
     @Enumerated(EnumType.STRING)
     @Builder.Default
     EventLocationType eventLocationType = EventLocationType.OFFLINE;
-
-    @Column(name = "organizer_name", nullable = false, length = 100)
-    String organizerName;
-    @Column(name = "organizer_description", length = 500)
-    String organizerDescription;
 
     @Column(name = "message_to_participants", length = 500)
     String messageToParticipants;
@@ -88,6 +85,9 @@ public class Event {
     @UpdateTimestamp
     LocalDateTime eventUpdatedAt;
 
+    @OneToOne(mappedBy = "event", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    EventOrganizer eventOrganizer;
+
     @OneToMany(mappedBy = "event", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     List<EventDate> eventDates;
 
@@ -97,8 +97,8 @@ public class Event {
     @OneToOne(mappedBy = "event", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     EventOfflineLocation eventOfflineLocation;
     
-    @OneToOne(mappedBy = "event", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
-    EventFAQ eventFAQ;
+    @OneToMany(mappedBy = "event", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+    List<EventFAQ> eventFAQs;
 
     @OneToMany(mappedBy = "event", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     List<EventMember> eventMembers;

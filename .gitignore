@@ -1,5 +1,6 @@
 /.vscode
 /.idea
+.env
 target/
 pom.xml.tag
 pom.xml.releaseBackup

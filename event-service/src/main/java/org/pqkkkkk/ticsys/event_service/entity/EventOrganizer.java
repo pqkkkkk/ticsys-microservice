@@ -9,31 +9,26 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 @Entity
-@Table(name = "ticsys_event_service_event_online_location_table")
+@Table(name = "ticsys_event_service_event_organizer_table")
 @Data
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class EventOnlineLocation {
+public class EventOrganizer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "event_online_location_id")
-    Long eventOnlineLocationId;
-
-    @Column(name = "meeting_link", nullable = false)
-    String meetingLink;
-    @Column(name = "meeting_id", nullable = false)
-    String meetingId;
-    @Column(name = "password")
-    String password;
+    @Column(name = "organizer_id")
+    Long organizerId;
+    @Column(name = "organizer_name", nullable = false, length = 100)
+    String organizerName;
+    @Column(name = "organizer_description", length = 500)
+    String organizerDescription;
+    @Column(name = "organizer_avatar_url")
+    String organizerAvatarUrl;
 
     @OneToOne
     @JoinColumn(name = "event_id", nullable = false)

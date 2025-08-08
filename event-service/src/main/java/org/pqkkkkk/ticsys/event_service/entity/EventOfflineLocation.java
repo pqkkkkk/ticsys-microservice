@@ -22,7 +22,7 @@ public class EventOfflineLocation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "event_offline_location_id")
-    Long eventOfflineLocaltionId;
+    Long eventOfflineLocationId;
 
     String province;
     String ward;
