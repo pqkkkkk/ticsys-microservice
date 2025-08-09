@@ -20,7 +20,7 @@ public class EventCommandJpaDao implements EventCommandDao {
 
     @Override
     public Event updateEvent(Event event) {
-        if(event == null || !eventRepository.existsById(event.getEventId())) {
+        if(event == null || event.getEventId() == null || !eventRepository.existsById(event.getEventId())) {
             return null; // or throw an exception
         }
 

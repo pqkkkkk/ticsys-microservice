@@ -49,9 +49,6 @@ public class EventServiceImpl implements EventService {
         if(event == null){
             throw new EventNotExistException("Event cannot be null");
         }
-        if(event.getEventId() == null) {
-            throw new EventNotExistException("Event ID is required");
-        }
 
         if(!identityClient.isValidUser(event.getUserId()))
             throw new UserIsNotValidException("User with ID is not valid");

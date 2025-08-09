@@ -4,6 +4,7 @@ import org.pqkkkkk.ticsys.event_service.Contants.EventCreationStep;
 import org.pqkkkkk.ticsys.event_service.Contants.EventStatus;
 import org.pqkkkkk.ticsys.event_service.dao.EventCommandDao;
 import org.pqkkkkk.ticsys.event_service.entity.Event;
+import org.pqkkkkk.ticsys.event_service.exception.EventNotExistException;
 import org.pqkkkkk.ticsys.event_service.exception.NotEnoughInfoException;
 import org.pqkkkkk.ticsys.event_service.service.EventCreationService;
 import org.springframework.stereotype.Service;
@@ -30,7 +31,13 @@ public class SettingCreationService implements EventCreationService {
         if(isCompleted(currentStep))
             event.setEventStatus(EventStatus.PENDING);
 
-        return eventCommandDao.updateEvent(event);
+        Event updatedEvent = eventCommandDao.updateEvent(event);
+
+        if(updatedEvent == null){
+            throw new EventNotExistException(event.getEventId());
+        }
+
+        return updatedEvent;
     }
     @Override
     public EventCreationStep getStep() {
