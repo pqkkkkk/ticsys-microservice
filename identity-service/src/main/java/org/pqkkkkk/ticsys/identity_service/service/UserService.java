@@ -16,4 +16,5 @@ public interface UserService {
     public User getUserByUserName(String username);
     public User getUserByEmail(String email);
     public boolean isUserExists(User user);
+    public boolean isValidUser(Long userId);
 }

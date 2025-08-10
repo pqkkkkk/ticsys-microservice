@@ -7,4 +7,5 @@ public interface UserDao {
     public User updateUser(User user);
     public User getUserByUserName(String userName);
     public User getUserByEmail(String email);
+    public User getUserById(Long userId);
 }

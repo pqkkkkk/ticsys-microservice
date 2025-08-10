@@ -27,51 +27,71 @@
 		<java.version>17</java.version>
 		<maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-		<grpc.version>1.72.0</grpc.version>
-		<protobuf-java.version>4.30.2</protobuf-java.version>
-		<spring-grpc.version>0.9.0</spring-grpc.version>
 		<spring-cloud.version>2024.0.0</spring-cloud.version>
 	</properties>
 
 	<dependencies>
+		<!-- gRPC Common dependency -->
+		<dependency>
+			<groupId>org.pqkkkkk.ticsys</groupId>
+			<artifactId>grpc-common</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 		<!-- Spring Boot Dependencies -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-		<!-- <dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency> -->
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-jdbc</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<!-- Spring gRPC Dependencies -->
 		<dependency>
-			<groupId>org.springframework.grpc</groupId>
-			<artifactId>spring-grpc-server-web-spring-boot-starter</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.grpc</groupId>
-			<artifactId>spring-grpc-test</artifactId>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>io.grpc</groupId>
-			<artifactId>grpc-services</artifactId>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
 
-		<!-- SQL Server Driver dependency -->
+		<!-- Postgres Driver dependency -->
 		<dependency>
-			<groupId>com.microsoft.sqlserver</groupId>
-			<artifactId>mssql-jdbc</artifactId>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<!-- Cloudinary dependencies-->
+		<dependency>
+			<groupId>com.cloudinary</groupId>
+			<artifactId>cloudinary-http5</artifactId>
+			<version>2.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.cloudinary</groupId>
+			<artifactId>cloudinary-taglib</artifactId>
+			<version>2.0.0</version>
+		</dependency>
+		<!-- gRPC Dependencies -->
+		<dependency>
+			<groupId>net.devh</groupId>
+			<artifactId>grpc-client-spring-boot-starter</artifactId>
+			<version>3.1.0.RELEASE</version>
 		</dependency>
 
 		<!-- Lombok for reducing boilerplate code -->
@@ -85,17 +105,24 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
 		</dependency>
+
+		<!-- OpenAPI Documentation -->
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>2.8.4</version>
+		</dependency>
+		<!-- env dependency -->
+		<dependency>
+			<groupId>io.github.cdimascio</groupId>
+			<artifactId>dotenv-java</artifactId>
+			<version>2.2.4</version>
+		</dependency>
+
 	</dependencies>
 	
 	<dependencyManagement>
 		<dependencies>
-			<dependency>
-				<groupId>org.springframework.grpc</groupId>
-				<artifactId>spring-grpc-dependencies</artifactId>
-				<version>${spring-grpc.version}</version>
-				<type>pom</type>
-				<scope>import</scope>
-			</dependency>
 			<dependency>
 				<groupId>org.springframework.cloud</groupId>
 				<artifactId>spring-cloud-dependencies</artifactId>
@@ -120,30 +147,6 @@
 					</annotationProcessorPaths>
 				</configuration>
 			</plugin>
-			<!-- <plugin>
-				<groupId>io.github.ascopes</groupId>
-				<artifactId>protobuf-maven-plugin</artifactId>
-				<version>3.4.2</version>
-				<configuration>
-					<protocVersion>${protobuf-java.version}</protocVersion>
-					<binaryMavenPlugins>
-						<binaryMavenPlugin>
-							<groupId>io.grpc</groupId>
-							<artifactId>protoc-gen-grpc-java</artifactId>
-							<version>${grpc.version}</version>
-							<options>@generated=omit</options>
-						</binaryMavenPlugin>
-					</binaryMavenPlugins>
-				</configuration>
-				<executions>
-					<execution>
-						<id>generate</id>
-						<goals>
-							<goal>generate</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin> -->
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>

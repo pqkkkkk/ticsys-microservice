@@ -1,6 +1,7 @@
 package org.pqkkkkk.ticsys.identity_service.service.impl;
 
 
+import org.pqkkkkk.ticsys.identity_service.Constants.UserStatus;
 import org.pqkkkkk.ticsys.identity_service.dao.UserDao;
 import org.pqkkkkk.ticsys.identity_service.entity.Role;
 import org.pqkkkkk.ticsys.identity_service.entity.User;
@@ -73,6 +74,20 @@ public class UserServiceImpl implements UserService {
         }
 
         return false;
+    }
+
+    @Override
+    public boolean isValidUser(Long userId) {
+        User user = userDao.getUserById(userId);
+
+        if(user == null) {
+            return false;
+        }
+        if(user.getStatus() != UserStatus.ACTIVE) {
+            return false;
+        }
+
+        return true;
     }
 
 }

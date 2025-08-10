@@ -1,8 +1,8 @@
 spring:
     application:
-        name: identity-service
+        name: event-service
     datasource:
-        url: jdbc:postgresql://localhost:5432/ticsys_identity_service_db
+        url: jdbc:postgresql://localhost:5432/ticsys_event_service_db
         username: postgres
         password: pqkiet854A@
         driver-class-name: org.postgresql.Driver
@@ -14,22 +14,8 @@ spring:
                 dialect: org.hibernate.dialect.PostgreSQLDialect
 
 server:
-    port: 8085
+    port: 8082
 
-logging:
-    level:
-        root: INFO
-        '[org.springframework.security]': DEBUG
-        
-jwt:
-    signer-key: 1TjXchw5FloESb63Kc+DFhTARvpWL4jUGCwfGWxuG5SIf/1y/LgJxHnMqaF6A/ij
-    expiration: 3600
-    refresh-token-expiration: 86400
-
-otp:
-    length: 6
-    expiry_minutes: 5
-    
 # Disable Eureka cho test
 eureka:
     client:

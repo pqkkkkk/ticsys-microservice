@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package org.pqkkkk.ticsys.grpc.user;
+
+option java_multiple_files = true;
+option java_package = "org.pqkkkk.ticsys.grpc.user";
+option java_outer_classname = "UserServiceProto";
+
+// Service definition
+service IdentityService {
+    rpc isValidUser(IsValidUserRequest) returns (IsValidUserResponse);
+}
+
+// Request message for IsValidUser
+message IsValidUserRequest {
+    int64 userId = 1;
+}
+// Response message for IsValidUser
+message IsValidUserResponse {
+    bool isValid = 1;
+    string message = 2; // Optional message for additional context
+}
