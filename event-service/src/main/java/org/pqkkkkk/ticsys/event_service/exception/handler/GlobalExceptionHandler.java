@@ -7,6 +7,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.TransactionSystemException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -16,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Order(2)
+@ControllerAdvice
 public class GlobalExceptionHandler {
     @ExceptionHandler(DataAccessException.class)
     public ResponseEntity<ApiResponse<Void>> handleDataAccessException(DataAccessException e) {
@@ -76,16 +78,6 @@ public class GlobalExceptionHandler {
     }
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<ApiResponse<Void>> handleEntityNotFoundException(EntityNotFoundException e) {
-        log.error("Entity not found: {}", e.getMessage());
-        ApiError apiError = new ApiError(e.getMessage());
-        ApiResponse<Void> response = new ApiResponse<>(null, false, HttpStatus.NOT_FOUND.value(),
-            "Entity not found",
-            apiError
-        );
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
-    }
-     @ExceptionHandler(jakarta.persistence.EntityNotFoundException.class)
-    public ResponseEntity<ApiResponse<Void>> handleEntityNotFoundExceptionFromJpa(jakarta.persistence.EntityNotFoundException e) {
         log.error("Entity not found: {}", e.getMessage());
         ApiError apiError = new ApiError(e.getMessage());
         ApiResponse<Void> response = new ApiResponse<>(null, false, HttpStatus.NOT_FOUND.value(),

@@ -4,7 +4,7 @@ spring:
     datasource:
         url: jdbc:postgresql://localhost:5432/ticsys_event_service_db
         username: postgres
-        password: pqkiet854A@
+        password: pqkiet854
         driver-class-name: org.postgresql.Driver
     jpa:
         hibernate.ddl-auto: update
@@ -35,7 +35,7 @@ eureka:
 
 grpc:
     client:
-        notification-service:
+        identity-service:
             negotiationType: plaintext
             enableKeepAlive: true
             discovery:

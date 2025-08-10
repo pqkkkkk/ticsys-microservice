@@ -23,6 +23,12 @@ public class BasicInfoCreationService implements EventCreationService {
     }
     @Override
     public boolean canHandle(Event event) {
+        if(event.getEventName() == null || event.getEventName().isBlank())
+            throw new NotEnoughInfoException("Event name is required to proceed with event creation.");
+
+        if(event.getEventDescription() == null || event.getEventDescription().isBlank())
+            throw new NotEnoughInfoException("Event description is required to proceed with event creation.");
+            
         if(event.getEventOrganizer() == null)
             throw new NotEnoughInfoException("Event organizer information is required to proceed with event creation.");
         

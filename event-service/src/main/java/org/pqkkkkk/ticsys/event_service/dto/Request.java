@@ -25,14 +25,13 @@ import jakarta.validation.constraints.NotNull;
 
 public class Request {
     public record CreateEventRequest(
+        Long eventId,
         @Min(value = 1, message = "Current step must be at least 1")
         @Max(value = 3, message = "Current step must be less than 3")
         Integer currentStep,
         @NotNull(message =  "User ID cannot be null")
         Long userId,
-        @NotBlank(message = "Event name cannot be blank")
         String name,
-        @NotBlank(message = "Event description cannot be blank")
         String description,
         EventCategory category,
         EventVisibility visibility,
@@ -46,6 +45,7 @@ public class Request {
     ){
         public Event toEntity(){
             Event event = Event.builder()
+                .eventId(eventId)
                 .userId(userId)
                 .eventName(name)
                 .eventDescription(description)
@@ -80,9 +80,9 @@ public class Request {
         }
     }
     public record CreateEventOrganizerRequest(
-        @NotBlank
+        @NotBlank(message = "Organizer name cannot be blank")
         String organizerName,
-        @NotBlank
+        @NotBlank(message = "Organizer description cannot be blank")
         String organizerDescription
     ){
         public EventOrganizer toEntity() {

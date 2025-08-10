@@ -4,7 +4,7 @@ spring:
     datasource:
         url: jdbc:postgresql://localhost:5432/ticsys_identity_service_db
         username: postgres
-        password: pqkiet854
+        password: pqkiet854A@
         driver-class-name: org.postgresql.Driver
     jpa:
         hibernate.ddl-auto: update

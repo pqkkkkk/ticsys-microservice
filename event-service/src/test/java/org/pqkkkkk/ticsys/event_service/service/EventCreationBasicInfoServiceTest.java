@@ -40,7 +40,7 @@ public class EventCreationBasicInfoServiceTest {
         CreateEventOrganizerRequest organizerRequest = new CreateEventOrganizerRequest("Organization", null);
         CreateEventOnlineLocationRequest onlineLocationRequest = new CreateEventOnlineLocationRequest("adsadsad", "asdasdasd", "123");
 
-        CreateEventRequest request = new CreateEventRequest(1, Long.valueOf(1), "Event",
+        CreateEventRequest request = new CreateEventRequest(null,1, Long.valueOf(1), "Event",
          "Event Description", EventCategory.MUSIC, null, EventLocationType.ONLINE, null,
         organizerRequest, null, null, null, onlineLocationRequest);
 
@@ -62,7 +62,7 @@ public class EventCreationBasicInfoServiceTest {
         CreateEventOrganizerRequest organizerRequest = new CreateEventOrganizerRequest("Organization", null);
         CreateEventOfflineLocationRequest offlineLocationRequest = new CreateEventOfflineLocationRequest("Province", "Ward", "Street", "Venue");
 
-        CreateEventRequest request = new CreateEventRequest(1, Long.valueOf(1), "Event",
+        CreateEventRequest request = new CreateEventRequest(null,1, Long.valueOf(1), "Event",
          "Event Description", EventCategory.MUSIC, null, EventLocationType.OFFLINE, null,
         organizerRequest, null, null, offlineLocationRequest, null);
 
@@ -84,7 +84,7 @@ public class EventCreationBasicInfoServiceTest {
         CreateEventOrganizerRequest organizerRequest = new CreateEventOrganizerRequest("Organization", null);
         CreateEventOfflineLocationRequest offlineLocationRequest = new CreateEventOfflineLocationRequest("Province", "Ward", "Street", "Venue");
 
-        CreateEventRequest request = new CreateEventRequest(1, Long.valueOf(1), "Event",
+        CreateEventRequest request = new CreateEventRequest(null,1, Long.valueOf(1), "Event",
          "Event Description", EventCategory.MUSIC, null, EventLocationType.ONLINE, null,
         organizerRequest, null, null, offlineLocationRequest, null);
 
@@ -103,7 +103,7 @@ public class EventCreationBasicInfoServiceTest {
         CreateEventOfflineLocationRequest offlineLocationRequest = new CreateEventOfflineLocationRequest("Province", "Ward", "Street", "Venue");
         CreateEventOnlineLocationRequest onlineLocationRequest = new CreateEventOnlineLocationRequest("Link", "ID", "Password");
 
-        CreateEventRequest request = new CreateEventRequest(1, Long.valueOf(1), "Event",
+        CreateEventRequest request = new CreateEventRequest(null,1, Long.valueOf(1), "Event",
          "Event Description", EventCategory.MUSIC, null, EventLocationType.ONLINE, null,
         organizerRequest, null, null, offlineLocationRequest, onlineLocationRequest);
 

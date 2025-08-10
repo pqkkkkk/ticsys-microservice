@@ -18,7 +18,6 @@ import org.pqkkkkk.ticsys.event_service.dao.jpa_repository.EventRepository;
 import org.pqkkkkk.ticsys.event_service.entity.Event;
 import org.pqkkkkk.ticsys.event_service.entity.EventDate;
 import org.pqkkkkk.ticsys.event_service.entity.Ticket;
-import org.pqkkkkk.ticsys.event_service.exception.EventNotExistException;
 import org.pqkkkkk.ticsys.event_service.exception.NotEnoughInfoException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -105,7 +104,7 @@ public class EventCreationTimeAndTicketServiceTest {
         when(identityClient.isValidUser(event.getUserId())).thenReturn(true);
 
         // Act & Assert
-        assertThrows(EventNotExistException.class, () -> {
+        assertThrows(NotEnoughInfoException.class, () -> {
             eventService.createEvent(event, EventCreationStep.TIME_AND_TICKET.getStep());
         });
     }
@@ -126,8 +125,6 @@ public class EventCreationTimeAndTicketServiceTest {
             .event(event)
             .build();
 
-        event.setEventDates(new ArrayList<>(List.of(eventDate)));
-
         List<Ticket> tickets = List.of(
             Ticket.builder()
                 .ticketName("Standard Ticket")
@@ -142,11 +139,19 @@ public class EventCreationTimeAndTicketServiceTest {
         );
         eventDate.setTickets(new ArrayList<>(tickets));
 
+        Event inputEvent = Event.builder()
+            .eventId(event.getEventId())
+            .userId(event.getUserId())
+            .eventName(event.getEventName())
+            .eventDescription(event.getEventDescription())
+            .eventDates(List.of(eventDate))
+            .build();
+
         // When
         when(identityClient.isValidUser(event.getUserId())).thenReturn(true);
 
         // Act
-        Event createdEvent = eventService.createEvent(event, EventCreationStep.TIME_AND_TICKET.getStep());
+        Event createdEvent = eventService.createEvent(inputEvent, EventCreationStep.TIME_AND_TICKET.getStep());
 
         // Assert
         assertNotNull(createdEvent);

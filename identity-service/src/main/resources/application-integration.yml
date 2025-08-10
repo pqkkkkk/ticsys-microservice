@@ -40,8 +40,12 @@ eureka:
         hostname: localhost
         ip-address: 127.0.0.1
         instanceId: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+        metadata-map:
+            grpc.port: "${grpc.server.port}" 
 
 grpc:
+    server:
+        port: 9095
     client:
         notification-service:
             negotiationType: plaintext
@@ -50,3 +54,4 @@ grpc:
                 enabled: true
                 selector: metadata
                 metadataKey: grpc.port
+
