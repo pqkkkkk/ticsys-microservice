@@ -86,6 +86,17 @@ public class GlobalExceptionHandler {
         );
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
     }
+    @ExceptionHandler(NullPointerException.class)
+    public ResponseEntity<ApiResponse<Void>> handleNullPointerException(NullPointerException e) {
+        log.error("Null pointer exception: {}", e.getMessage());
+        ApiError apiError = new ApiError("Null pointer exception");
+        ApiResponse<Void> response = new ApiResponse<>(null, false, HttpStatus.INTERNAL_SERVER_ERROR.value(),
+            "An error occurred due to null pointer",
+            apiError
+        );
+
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+    }
 
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ApiResponse<Void>> handleException(Exception e) {

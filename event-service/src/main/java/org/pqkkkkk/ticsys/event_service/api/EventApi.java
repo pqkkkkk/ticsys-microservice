@@ -1,8 +1,8 @@
 package org.pqkkkkk.ticsys.event_service.api;
 
 import org.pqkkkkk.ticsys.event_service.dto.DTO.EventDTO;
-import org.pqkkkkk.ticsys.event_service.dto.Request.CreateEventRequest;
 import org.pqkkkkk.ticsys.event_service.dto.Response.ApiResponse;
+import org.pqkkkkk.ticsys.event_service.dto.request.EventRequest.CreateEventRequest;
 import org.pqkkkkk.ticsys.event_service.entity.Event;
 import org.pqkkkkk.ticsys.event_service.service.EventService;
 import org.springframework.http.HttpStatus;

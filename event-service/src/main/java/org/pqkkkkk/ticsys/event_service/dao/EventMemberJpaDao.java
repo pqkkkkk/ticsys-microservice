@@ -31,7 +31,7 @@ public class EventMemberJpaDao implements EventMemberDao {
 
     @Override
     public List<EventMember> getAllEventMembers(Long eventId) {
-        return eventMemberRepository.findByEventId(eventId);
+        return eventMemberRepository.findByEventEventId(eventId);
     }
 
     @Override

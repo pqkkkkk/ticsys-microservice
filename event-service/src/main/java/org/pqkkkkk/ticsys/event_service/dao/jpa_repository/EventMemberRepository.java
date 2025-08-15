@@ -8,10 +8,10 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 public interface EventMemberRepository extends JpaRepository<EventMember, Long>  {
-    public List<EventMember> findByEventId(Long eventId);
+    public List<EventMember> findByEventEventId(Long eventId);
     @Modifying
     @Query("""
-            DELETE FROM EventMember em WHERE em.eventMemberId = :eventMemberId
-            """)
+        DELETE FROM EventMember em WHERE em.eventMemberId = :eventMemberId
+        """)
     public Integer deleteByEventMemberId(Long eventMemberId);
 }
