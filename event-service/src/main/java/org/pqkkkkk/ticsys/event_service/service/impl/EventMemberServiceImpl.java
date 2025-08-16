@@ -11,6 +11,8 @@ import org.pqkkkkk.ticsys.event_service.service.EventMemberService;
 import org.pqkkkkk.ticsys.event_service.service.EventQueryService;
 import org.springframework.stereotype.Service;
 
+import jakarta.transaction.Transactional;
+
 @Service
 public class EventMemberServiceImpl implements EventMemberService {
     private final EventMemberDao eventMemberDao;
@@ -25,6 +27,7 @@ public class EventMemberServiceImpl implements EventMemberService {
     }
 
     @Override
+    @Transactional
     public EventMember addEventMember(EventMember eventMemberInfo) {
         if(eventMemberInfo == null) {
             throw new IllegalArgumentException("Event member information cannot be null");
@@ -43,6 +46,7 @@ public class EventMemberServiceImpl implements EventMemberService {
     }
 
     @Override
+    @Transactional
     public boolean removeEventMember(Long eventMemberId) {
         if(eventMemberId == null){
             throw new IllegalArgumentException("Event member ID cannot be null");
@@ -58,6 +62,7 @@ public class EventMemberServiceImpl implements EventMemberService {
     }
 
     @Override
+    @Transactional
     public EventMember updateEventMember(EventMember eventMemberInfo) {
         if(eventMemberInfo == null) {
             throw new IllegalArgumentException("Event member information cannot be null");

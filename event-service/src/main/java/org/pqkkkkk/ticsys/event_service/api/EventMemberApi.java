@@ -36,9 +36,12 @@ public class EventMemberApi {
                             "Event member added successfully", null);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
+
     @PutMapping("/{id}")
     public ResponseEntity<ApiResponse<EventMemberDTO>> updateEventMember(@PathVariable Long id, @Valid @RequestBody CreateEventMemberRequest request) {
-        EventMember eventMember = eventMemberService.updateEventMember(request.toEntity());
+        EventMember eventMember = request.toEntity();
+        eventMember.setEventMemberId(id);
+        eventMember = eventMemberService.updateEventMember(eventMember);
 
         EventMemberDTO dto = EventMemberDTO.from(eventMember);
 
@@ -46,6 +49,7 @@ public class EventMemberApi {
                             "Event member updated successfully", null);
         return ResponseEntity.status(HttpStatus.OK).body(response);
     }
+    
     @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse<Void>> deleteEventMember(@PathVariable Long id) {
         eventMemberService.removeEventMember(id);
