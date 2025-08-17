@@ -4,7 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 
-import org.pqkkkkk.ticsys.event_service.entity.event_seat_map.EventSeatMapZone;
+import org.pqkkkkk.ticsys.event_service.entity.event_seat_map.EventSeatMap;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -16,6 +16,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -50,6 +51,6 @@ public class EventDate {
     @OneToMany(mappedBy = "eventDate", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     List<Ticket> tickets;
 
-    @OneToMany(mappedBy = "eventDate", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    List<EventSeatMapZone> eventSeatMapZones;
+    @OneToOne(mappedBy = "eventDate", orphanRemoval = true, cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    EventSeatMap eventSeatMap;
 }

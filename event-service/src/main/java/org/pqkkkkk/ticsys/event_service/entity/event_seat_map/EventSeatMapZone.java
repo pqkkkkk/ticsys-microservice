@@ -3,7 +3,6 @@ package org.pqkkkkk.ticsys.event_service.entity.event_seat_map;
 import java.util.List;
 
 import org.pqkkkkk.ticsys.event_service.Contants.EventSeatMapZoneShape;
-import org.pqkkkkk.ticsys.event_service.entity.EventDate;
 import org.pqkkkkk.ticsys.event_service.entity.Ticket;
 
 import jakarta.persistence.CascadeType;
@@ -54,8 +53,8 @@ public class EventSeatMapZone {
     String fill;
 
     @ManyToOne
-    @JoinColumn(name = "event_date_id", nullable = false)
-    EventDate eventDate;
+    @JoinColumn(name = "event_seat_map", nullable = false)
+    EventSeatMap eventSeatMap;
 
     @OneToOne
     @JoinColumn(name = "ticket_id", nullable = false)
