@@ -22,14 +22,18 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Pattern;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 @Entity
 @Table(name = "ticsys_event_service_event_seat_map_zone_table")
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class EventSeatMapZone {
     @Id
@@ -56,7 +60,7 @@ public class EventSeatMapZone {
     @JoinColumn(name = "event_seat_map", nullable = false)
     EventSeatMap eventSeatMap;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "ticket_id", nullable = false)
     Ticket ticket;
 
