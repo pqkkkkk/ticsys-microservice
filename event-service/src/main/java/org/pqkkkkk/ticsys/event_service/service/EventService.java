@@ -5,5 +5,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface EventService {
     public Event createEvent(Event event, Integer currentStep);
+    public Event updateEvent(Event event, Integer currentStep);
     public String uploadBanner(Long eventId, MultipartFile banner);
 }

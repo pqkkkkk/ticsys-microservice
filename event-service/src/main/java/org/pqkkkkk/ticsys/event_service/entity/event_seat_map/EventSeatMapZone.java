@@ -3,7 +3,6 @@ package org.pqkkkkk.ticsys.event_service.entity.event_seat_map;
 import java.util.List;
 
 import org.pqkkkkk.ticsys.event_service.Contants.EventSeatMapZoneShape;
-import org.pqkkkkk.ticsys.event_service.entity.EventDate;
 import org.pqkkkkk.ticsys.event_service.entity.Ticket;
 
 import jakarta.persistence.CascadeType;
@@ -23,14 +22,18 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Pattern;
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
 @Entity
 @Table(name = "ticsys_event_service_event_seat_map_zone_table")
 @Data
 @Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class EventSeatMapZone {
     @Id
@@ -54,10 +57,10 @@ public class EventSeatMapZone {
     String fill;
 
     @ManyToOne
-    @JoinColumn(name = "event_date_id", nullable = false)
-    EventDate eventDate;
+    @JoinColumn(name = "event_seat_map", nullable = false)
+    EventSeatMap eventSeatMap;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "ticket_id", nullable = false)
     Ticket ticket;
 

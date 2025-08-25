@@ -1,4 +1,4 @@
-package org.pqkkkkk.ticsys.event_service.dto;
+package org.pqkkkkk.ticsys.event_service.dto.request;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -23,7 +23,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
-public class Request {
+public class EventRequest {
     public record CreateEventRequest(
         Long eventId,
         @Min(value = 1, message = "Current step must be at least 1")

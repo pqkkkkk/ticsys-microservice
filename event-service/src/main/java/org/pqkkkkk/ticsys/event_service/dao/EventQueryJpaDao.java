@@ -1,7 +1,10 @@
 package org.pqkkkkk.ticsys.event_service.dao;
 
 import org.pqkkkkk.ticsys.event_service.dao.jpa_repository.EventRepository;
+import org.pqkkkkk.ticsys.event_service.dto.filter_object.EventFilter;
 import org.pqkkkkk.ticsys.event_service.entity.Event;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 @Repository
@@ -14,6 +17,10 @@ public class EventQueryJpaDao implements EventQueryDao {
     @Override
     public Event findEventById(Long eventId) {
         return eventRepository.findById(eventId).orElse(null);
+    }
+    @Override
+    public Page<Event> findEvents(EventFilter eventFillter, Pageable pageable) {
+        return eventRepository.findByEventFillter(eventFillter, pageable);
     }
 
 }
