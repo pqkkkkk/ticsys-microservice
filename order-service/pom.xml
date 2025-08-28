@@ -37,9 +37,20 @@
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
+			<!-- gRPC Common dependency -->
+		<dependency>
+			<groupId>org.pqkkkkk.ticsys</groupId>
+			<artifactId>grpc-common</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		<!-- Spring Boot dependencies-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jdbc</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -69,6 +80,13 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+
+		<!-- Grpc dependencies-->
+		<dependency>
+			<groupId>net.devh</groupId>
+			<artifactId>grpc-client-spring-boot-starter</artifactId>
+			<version>3.1.0.RELEASE</version>
 		</dependency>
 	</dependencies>
 

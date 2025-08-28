@@ -9,30 +9,27 @@ option java_outer_classname = "EventServiceProto";
 // Service definition
 service EventService {
     rpc ValidateEvent(ValidateEventRequest) returns (ValidateEventResponse);
-    rpc ValidateTicketQuantity(ValidateTicketQuantityRequest) returns (ValidateTicketQuantityResponse);
-    rpc UpdateTicketInventory(UpdateTicketInventoryRequest) returns (UpdateTicketInventoryResponse);
+    rpc ReverseTicketsAndCalculateSubtotal(ReverseTicketsAndCalculateSubtotalRequest)
+        returns (ReverseTicketsAndCalculateSubtotalResponse);
 }
 
 message ValidateEventRequest {
-    string event_id = 1;
+    int64 event_id = 1;
 }
 message ValidateEventResponse {
     bool is_valid = 1;
     string message = 2; // Additional information if needed
 }
-message ValidateTicketQuantityRequest {
-    string event_id = 1;
-    int32 requested_quantity = 2;
+message TicketInOrder {
+    int64 ticket_id = 1;
+    int32 quantity = 2;
 }
-message ValidateTicketQuantityResponse {
-    bool is_valid = 1;
+message ReverseTicketsAndCalculateSubtotalRequest {
+    int64 event_id = 1;
+    repeated TicketInOrder ticket_in_orders = 2;
+}
+message ReverseTicketsAndCalculateSubtotalResponse {
+    double sub_total = 1;
     string message = 2; // Additional information if needed
-}
-message UpdateTicketInventoryRequest {
-    string event_id = 1;
-    int32 quantity_change = 2; // Positive for addition, negative for subtraction
-}
-message UpdateTicketInventoryResponse {
-    bool success = 1;
-    string message = 2; // Additional information if needed
+    bool is_valid_event = 3;
 }

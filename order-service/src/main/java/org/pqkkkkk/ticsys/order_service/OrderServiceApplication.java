@@ -1,4 +1,4 @@
-package org.pqkkkkk.order_service;
+package org.pqkkkkk.ticsys.order_service;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

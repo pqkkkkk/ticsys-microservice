@@ -8,6 +8,7 @@ option java_outer_classname = "NotificationServiceProto";
 
 service NotificationService {
     rpc SendOTPVerificationCode(SendOTPVerificationCodeRequest) returns (SendOTPVerificationCodeResponse);
+    rpc SendOrderConfirmation(SendOrderConfirmationRequest) returns (SendOrderConfirmationResponse);
 }
 
 message SendOTPVerificationCodeRequest{
@@ -16,6 +17,25 @@ message SendOTPVerificationCodeRequest{
 }
 
 message SendOTPVerificationCodeResponse{
+    bool success = 1;
+    string message = 2;
+}
+
+message TicketInOrder {
+    int64 ticket_type_id = 1;
+    int32 quantity = 2;
+}
+message SendOrderConfirmationRequest {
+    int64 order_id = 1;
+    double sub_total = 2;
+    double total = 3;
+    int64 user_id = 4;
+    int64 event_id = 5;
+    int64 promotion_id = 6;
+    repeated TicketInOrder ticket_in_orders = 7;
+}
+
+message SendOrderConfirmationResponse {
     bool success = 1;
     string message = 2;
 }
