@@ -5,9 +5,11 @@ import org.pqkkkk.ticsys.grpc.notification.TicketInOrder;
 import org.pqkkkk.ticsys.grpc.notification.NotificationServiceGrpc.NotificationServiceBlockingStub;
 import org.pqkkkkk.ticsys.order_service.domain.entity.Order;
 import org.pqkkkkk.ticsys.order_service.domain.usecase.NotificationService;
+import org.springframework.stereotype.Service;
 
 import net.devh.boot.grpc.client.inject.GrpcClient;
 
+@Service("notificationGrpcClient")
 public class NotificationGrpcClient implements NotificationService {
 
     @GrpcClient("notification-service")

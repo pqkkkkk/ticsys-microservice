@@ -22,25 +22,25 @@ public class OrderServiceImpl implements OrderService {
     private EventService eventService;
     private PaymentService paymentService;
     private PromotionService promotionService;
-    private IdentityService userService;
+    private IdentityService identityService;
     private NotificationService notificationService;
 
     public OrderServiceImpl(OrderCommandDao orderCommandDao,
                         OrderQueryService orderQueryService, EventService eventService, PaymentService paymentService,
-                        PromotionService promotionService, IdentityService userService,
+                        PromotionService promotionService, IdentityService identityService,
                         NotificationService notificationService) {
         this.orderCommandDao = orderCommandDao;
         this.eventService = eventService;
         this.paymentService = paymentService;
         this.promotionService = promotionService;
         this.notificationService = notificationService;
-        this.userService = userService;
+        this.identityService = identityService;
         this.orderQueryService = orderQueryService;
     }
 
     @Override
     public Order reverseOrder(Order order) {
-        if(!userService.isValidUser(order.getUserId())) {
+        if(!identityService.isValidUser(order.getUserId())) {
             throw new IllegalArgumentException("Invalid user");
         }
 
@@ -56,10 +56,16 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order payOrder(Order order) {
+    public Order payOrder(Order existentOrderInfo) {
 
-        if(!orderQueryService.isValidOrder(order.getOrderId())) {
+        if(!orderQueryService.isValidOrder(existentOrderInfo.getOrderId())) {
             throw new IllegalArgumentException("Invalid order");
+        }
+
+        Order order = orderQueryService.getOrderById(existentOrderInfo.getOrderId());
+
+        if(order.getExpiredAt().isAfter(LocalDateTime.now())) {
+            throw new IllegalArgumentException("Order is expired");
         }
 
         order.setTotal(order.getSubTotal() - promotionService.applyPromotion());

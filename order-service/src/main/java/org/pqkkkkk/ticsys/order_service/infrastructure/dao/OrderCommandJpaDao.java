@@ -21,8 +21,10 @@ public class OrderCommandJpaDao implements OrderCommandDao {
 
     @Override
     public Order updateOrder(Order order) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateOrder'");
+        if(order == null || order.getOrderId() == null) {
+            throw new IllegalArgumentException("Invalid order");
+        }
+        return orderRepository.save(order);
     }
 
 }
