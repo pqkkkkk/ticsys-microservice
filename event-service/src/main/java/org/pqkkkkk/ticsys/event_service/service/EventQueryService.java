@@ -8,5 +8,6 @@ public interface EventQueryService {
     public Event getEventById(Long eventId);
     public Page<Event> getEvents(EventFilter eventFillter);
     public boolean isValidEvent(Long eventId);
+    public boolean isValidEventDate(Long eventId, Long eventDateId);
 }
     

@@ -16,9 +16,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.test.context.ActiveProfiles;
 
+import jakarta.transaction.Transactional;
+
 @SpringBootTest
 @ActiveProfiles("test")
 @TestInstance(Lifecycle.PER_CLASS)
+@Transactional
 public class EventQueryServiceTest {
     @Autowired
     private EventQueryService eventQueryService;

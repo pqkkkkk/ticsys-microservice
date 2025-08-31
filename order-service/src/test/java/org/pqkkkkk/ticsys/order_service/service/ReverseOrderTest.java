@@ -60,9 +60,10 @@ public class ReverseOrderTest {
         Order order = Order.builder()
                 .userId(1L)
                 .eventId(1L)
+                .eventDateId(1L)
                 .build();
         when(identityService.isValidUser(1L)).thenReturn(true);
-        when(eventService.reverseTicketsAndCalculateSubtotal(1L, order.getTicketInOrders())).thenReturn(100.0);
+        when(eventService.reverseTicketsAndCalculateSubtotal(1L, 1L, order.getTicketInOrders())).thenReturn(100.0);
 
         // Act
         Order reversedOrder = orderService.reverseOrder(order);

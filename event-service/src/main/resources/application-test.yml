@@ -13,3 +13,7 @@ spring:
     h2:
         console:
             enabled: true
+
+grpc:
+    server:
+        port: -1 # Disable gRPC server

@@ -44,7 +44,8 @@ public class OrderServiceImpl implements OrderService {
             throw new IllegalArgumentException("Invalid user");
         }
 
-        Double subTotal = eventService.reverseTicketsAndCalculateSubtotal(order.getEventId(), order.getTicketInOrders());
+        Double subTotal = eventService.reverseTicketsAndCalculateSubtotal(order.getEventId(), order.getEventDateId(),
+                                order.getTicketInOrders());
 
         order.setSubTotal(subTotal);
         order.setOrderStatus(OrderStatus.PENDING);

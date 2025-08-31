@@ -22,3 +22,7 @@ eureka:
         enabled: false  # Tắt Eureka client
         register-with-eureka: false
         fetch-registry: false
+
+grpc:
+    server:
+        port: 9096

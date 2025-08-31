@@ -39,12 +39,14 @@
 	</dependencyManagement>
 
 	<dependencies>
-	    <!-- gRPC Dependencies -->
+	    <!-- gRPC common contracts dependency -->
 	    <dependency>
 			<groupId>org.pqkkkkk.ticsys</groupId>
 			<artifactId>grpc-common</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+
+		<!-- gRPC Dependencies -->
 		<dependency>
           <groupId>io.grpc</groupId>
           <artifactId>grpc-netty-shaded</artifactId>

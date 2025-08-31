@@ -66,7 +66,7 @@ public class Ticket {
     LocalDateTime soldEndTime;
 
     @ManyToOne
-    @JoinColumn(name = "event_date_id", nullable = false)
+    @JoinColumn(name = "event_date_id", nullable = true)
     EventDate eventDate;
     
     @OneToMany(mappedBy = "ticket", fetch = FetchType.LAZY)

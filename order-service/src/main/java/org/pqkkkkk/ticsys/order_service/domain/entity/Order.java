@@ -45,6 +45,9 @@ public class Order {
     @Column(name = "user_id")
     Long userId;
 
+    @Column(name = "event_date_id")
+    Long eventDateId;
+
     @Column(name = "event_id")
     Long eventId;
 

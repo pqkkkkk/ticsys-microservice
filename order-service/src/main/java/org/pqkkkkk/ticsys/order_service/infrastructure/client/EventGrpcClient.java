@@ -26,9 +26,10 @@ public class EventGrpcClient implements EventService {
     }
 
     @Override
-    public Double reverseTicketsAndCalculateSubtotal(Long eventId, List<TicketInOrder> ticketInOrders) {
+    public Double reverseTicketsAndCalculateSubtotal(Long eventId, Long eventDateId, List<TicketInOrder> ticketInOrders) {
         ReverseTicketsAndCalculateSubtotalRequest request = ReverseTicketsAndCalculateSubtotalRequest.newBuilder()
                 .setEventId(eventId)
+                .setEventDateId(eventDateId)
                 .addAllTicketInOrders(ticketInOrders.stream()
                         .map(ticket -> org.pqkkkk.ticsys.grpc.event.TicketInOrder.newBuilder()
                                 .setTicketId(ticket.getTicketId())

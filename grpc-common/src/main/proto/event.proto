@@ -26,7 +26,8 @@ message TicketInOrder {
 }
 message ReverseTicketsAndCalculateSubtotalRequest {
     int64 event_id = 1;
-    repeated TicketInOrder ticket_in_orders = 2;
+    int64 event_date_id = 2;
+    repeated TicketInOrder ticket_in_orders = 3;
 }
 message ReverseTicketsAndCalculateSubtotalResponse {
     double sub_total = 1;

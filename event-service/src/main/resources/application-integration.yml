@@ -34,6 +34,8 @@ eureka:
         instanceId: ${spring.application.name}:${spring.application.instance_id:${random.value}}
 
 grpc:
+    server:
+        port: 9096
     client:
         identity-service:
             negotiationType: plaintext
