@@ -23,6 +23,8 @@ public class EventServiceGrpcImpl extends EventServiceImplBase {
     @Override
     public void reverseTicketsAndCalculateSubtotal(ReverseTicketsAndCalculateSubtotalRequest request, 
                     StreamObserver<ReverseTicketsAndCalculateSubtotalResponse> responseObserver) {
+        log.info("Received gRPC request to reverse tickets and calculate subtotal for event: {}", request.getEventId());
+
         TicketReservation ticketReservation = buildTicketReservation(request);
 
         Double subTotal = eventInventoryService.reserveTickets(ticketReservation);

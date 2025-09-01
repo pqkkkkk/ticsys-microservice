@@ -52,7 +52,7 @@ public class ReverseOrderTest {
         when(identityService.isValidUser(1L)).thenReturn(false);
 
         // Act & Assert
-        assertThrows(IllegalArgumentException.class, () -> orderService.reverseOrder(order));
+        assertThrows(IllegalArgumentException.class, () -> orderService.reserveOrder(order));
     }
     @Test
     public void reverseOrder_WithValidInfo_ShouldReverseOrder(){
@@ -66,7 +66,7 @@ public class ReverseOrderTest {
         when(eventService.reverseTicketsAndCalculateSubtotal(1L, 1L, order.getTicketInOrders())).thenReturn(100.0);
 
         // Act
-        Order reversedOrder = orderService.reverseOrder(order);
+        Order reversedOrder = orderService.reserveOrder(order);
 
         // Assert
         assertNotNull(reversedOrder);

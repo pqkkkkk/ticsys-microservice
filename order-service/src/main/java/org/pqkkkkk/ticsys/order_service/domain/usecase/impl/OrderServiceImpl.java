@@ -15,7 +15,10 @@ import org.pqkkkkk.ticsys.order_service.domain.usecase.PromotionService;
 import org.pqkkkkk.ticsys.order_service.domain.usecase.IdentityService;
 import org.springframework.stereotype.Service;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class OrderServiceImpl implements OrderService {
     private OrderCommandDao orderCommandDao;
     private OrderQueryService orderQueryService;
@@ -39,19 +42,27 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order reverseOrder(Order order) {
+    public Order reserveOrder(Order order) {
+        log.info("Start reserving order");
+
         if(!identityService.isValidUser(order.getUserId())) {
             throw new IllegalArgumentException("Invalid user");
         }
 
+        log.info("User {} is valid", order.getUserId());
+
         Double subTotal = eventService.reverseTicketsAndCalculateSubtotal(order.getEventId(), order.getEventDateId(),
                                 order.getTicketInOrders());
+
+        log.info("Event {} is valid and reserve tickets successfully", order.getEventId());
 
         order.setSubTotal(subTotal);
         order.setOrderStatus(OrderStatus.PENDING);
         order.setExpiredAt(LocalDateTime.now().plusMinutes(Constants.ORDER_EXPIRATION_MINUTES));
 
         orderCommandDao.addOrder(order);
+
+        log.info("Reserve order successfully");
 
         return order;
     }
