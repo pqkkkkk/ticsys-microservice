@@ -4,7 +4,7 @@ spring:
     datasource:
         url: jdbc:postgresql://localhost:5432/ticsys_event_service_db
         username: postgres
-        password: pqkiet854
+        password: pqkiet854A@
         driver-class-name: org.postgresql.Driver
     jpa:
         hibernate.ddl-auto: update
@@ -32,6 +32,9 @@ eureka:
         hostname: localhost
         ip-address: 127.0.0.1
         instanceId: ${spring.application.name}:${spring.application.instance_id:${random.value}}
+        metadata-map:
+            grpc.port: "${grpc.server.port}"
+
 
 grpc:
     server:

@@ -25,7 +25,7 @@ public class OrderApi {
     public OrderApi(OrderService orderService) {
         this.orderService = orderService;
     }
-    @PostMapping
+    @PostMapping("/reservation")
     public ResponseEntity<ApiResponse<OrderDTO>> reserveOrder(@Valid @RequestBody ReserveOrderRequest request) {
         Order order = request.toEntity();
 

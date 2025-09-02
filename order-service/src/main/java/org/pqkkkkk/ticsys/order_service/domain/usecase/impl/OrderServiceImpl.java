@@ -13,6 +13,7 @@ import org.pqkkkkk.ticsys.order_service.domain.usecase.OrderService;
 import org.pqkkkkk.ticsys.order_service.domain.usecase.PaymentService;
 import org.pqkkkkk.ticsys.order_service.domain.usecase.PromotionService;
 import org.pqkkkkk.ticsys.order_service.domain.usecase.IdentityService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
@@ -31,7 +32,7 @@ public class OrderServiceImpl implements OrderService {
     public OrderServiceImpl(OrderCommandDao orderCommandDao,
                         OrderQueryService orderQueryService, EventService eventService, PaymentService paymentService,
                         PromotionService promotionService, IdentityService identityService,
-                        NotificationService notificationService) {
+                        @Qualifier("notificationMockClient") NotificationService notificationService) {
         this.orderCommandDao = orderCommandDao;
         this.eventService = eventService;
         this.paymentService = paymentService;
@@ -53,6 +54,9 @@ public class OrderServiceImpl implements OrderService {
 
         Double subTotal = eventService.reverseTicketsAndCalculateSubtotal(order.getEventId(), order.getEventDateId(),
                                 order.getTicketInOrders());
+        if(subTotal == null) {
+            throw new IllegalArgumentException("Invalid event or no tickets available");
+        }
 
         log.info("Event {} is valid and reserve tickets successfully", order.getEventId());
 

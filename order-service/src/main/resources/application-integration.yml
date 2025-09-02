@@ -32,8 +32,8 @@ eureka:
         hostname: localhost
         ip-address: 127.0.0.1
         instanceId: ${spring.application.name}:${spring.application.instance_id:${random.value}}
-        metadata-map:
-            grpc.port: "${grpc.server.port}" 
+        # metadata-map:
+        #     grpc.port: "${grpc.server.port}" 
 
 grpc:
     client:
@@ -51,7 +51,7 @@ grpc:
                 enabled: true
                 selector: metadata
                 metadataKey: grpc.port
-        user-service:
+        identity-service:
             negotiationType: plaintext
             enableKeepAlive: true
             discovery:

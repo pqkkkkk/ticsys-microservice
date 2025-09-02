@@ -6,6 +6,7 @@ import org.pqkkkk.ticsys.grpc.user.IsValidUserResponse;
 import org.pqkkkkk.ticsys.order_service.domain.usecase.IdentityService;
 import org.springframework.stereotype.Service;
 
+import io.grpc.StatusRuntimeException;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 
 @Service
@@ -15,11 +16,17 @@ public class IdentityGrpcClient implements IdentityService {
 
     @Override
     public boolean isValidUser(Long userId) {
-        IsValidUserRequest request = IsValidUserRequest.newBuilder()
-                .setUserId(userId)
-                .build();
-        IsValidUserResponse response = blockingStub.isValidUser(request);
-        return response.getIsValid();
+        try{
+            IsValidUserRequest request = IsValidUserRequest.newBuilder()
+                    .setUserId(userId)
+                    .build();
+
+            IsValidUserResponse response = blockingStub.isValidUser(request);
+            
+            return response.getIsValid();
+        } catch (StatusRuntimeException exception) {
+            return false;
+        }
     }
 
 }
