@@ -21,21 +21,9 @@ logging:
         root: INFO
         '[org.springframework.security]': DEBUG
     
-# Disable Eureka cho test
-# eureka:
-#     client:
-#         enabled: false  # Tắt Eureka client
-#         register-with-eureka: false
-#         fetch-registry: false
 
-# grpc:
-#     server:
-#         port: 9095
-#     client:
-#         notification-service:
-#             negotiationType: plaintext
-#             enableKeepAlive: true
-#             discovery:
-#                 enabled: true
-#                 selector: metadata
-#                 metadataKey: grpc.port
+eureka:
+    client:
+        enabled: false  # Tắt Eureka client
+        register-with-eureka: false
+        fetch-registry: false

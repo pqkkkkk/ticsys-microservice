@@ -2,7 +2,7 @@ spring:
     application:
         name: order-service
     profiles:
-        active: integration
+        active: single
 
 server:
     port: 8084

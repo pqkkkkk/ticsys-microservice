@@ -40,9 +40,9 @@ public class OrderApi {
     }
     @PutMapping("/payment")
     public ResponseEntity<ApiResponse<OrderDTO>> payOrder(@Valid @RequestBody PayOrderRequest request) {
-        Order order = request.toEntity();
+        Order exinstentOrderInfo = request.toEntity();
 
-        orderService.payOrder(order);
+        Order order = orderService.payOrder(exinstentOrderInfo);
 
         OrderDTO dto = OrderDTO.fromEntity(order);
 

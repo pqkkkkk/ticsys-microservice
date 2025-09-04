@@ -80,7 +80,7 @@ public class OrderServiceImpl implements OrderService {
 
         Order order = orderQueryService.getOrderById(existentOrderInfo.getOrderId());
 
-        if(order.getExpiredAt().isAfter(LocalDateTime.now())) {
+        if(order.getExpiredAt().isBefore(LocalDateTime.now())) {
             throw new IllegalArgumentException("Order is expired");
         }
 
