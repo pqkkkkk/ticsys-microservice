@@ -1,4 +1,4 @@
-package org.pqkkkkk.order_service;
+package org.pqkkkkk.ticsys.order_service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

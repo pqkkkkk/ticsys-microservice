@@ -23,8 +23,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
+import jakarta.transaction.Transactional;
+
 @SpringBootTest
 @ActiveProfiles("test")
+@Transactional
 public class EventSeatMapServiceTest {
     @Autowired
     private EventSeatMapService eventSeatMapService;

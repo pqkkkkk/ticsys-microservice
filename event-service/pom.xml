@@ -37,6 +37,12 @@
 			<artifactId>grpc-common</artifactId>
 			<version>${project.version}</version>
 		</dependency>
+		<!-- Common domain contracts dependency-->
+		<dependency>
+			<groupId>org.pqkkkkk.ticsys</groupId>
+			<artifactId>common-domain-contracts</artifactId>
+			<version>${project.version}</version>
+		</dependency>
 		<!-- Spring Boot Dependencies -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -90,9 +96,29 @@
 		<!-- gRPC Dependencies -->
 		<dependency>
 			<groupId>net.devh</groupId>
-			<artifactId>grpc-client-spring-boot-starter</artifactId>
+			<artifactId>grpc-spring-boot-starter</artifactId>
 			<version>3.1.0.RELEASE</version>
 		</dependency>
+		<!-- <dependency>
+          <groupId>io.grpc</groupId>
+          <artifactId>grpc-netty-shaded</artifactId>
+          <version>1.64.0</version>
+        </dependency>
+        <dependency>
+          <groupId>io.grpc</groupId>
+          <artifactId>grpc-protobuf</artifactId>
+          <version>1.64.0</version>
+        </dependency>
+        <dependency>
+          <groupId>io.grpc</groupId>
+          <artifactId>grpc-stub</artifactId>
+          <version>1.64.0</version>
+        </dependency>
+        <dependency>
+          <groupId>javax.annotation</groupId>
+          <artifactId>javax.annotation-api</artifactId>
+          <version>1.3.2</version>
+        </dependency> -->
 
 		<!-- Lombok for reducing boilerplate code -->
 		<dependency>
