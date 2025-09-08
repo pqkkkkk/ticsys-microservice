@@ -19,6 +19,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -49,8 +51,12 @@ public class VoucherPromotion {
 
     // Only one of the following two fields will be used based on voucherType
     @Column(name = "voucher_value_by_percentage")
+    @Min(value = 0, message = "Percentage must be non-negative")
+    @Max(value = 100, message = "Percentage cannot exceed 100")
     Double voucherValueByPercentage;
+
     @Column(name = "voucher_value_by_amount")
+    @Min(value = 0, message = "Amount must be non-negative")
     Double voucherValueByAmount;
 
     @Column(name = "voucher_promotion_type")
@@ -98,6 +104,9 @@ public class VoucherPromotion {
 
     @Column(name = "created_by", nullable = false)
     Long createdBy;
+
+    @Column(name = "updated_by")
+    Long updatedBy;
 
     // Only for Single Code Promotion
     @OneToOne(mappedBy = "voucherPromotion")

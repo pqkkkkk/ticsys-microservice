@@ -1,4 +1,4 @@
-package com.example.promotion_service;
+package org.pqkkkkk.ticsys.promotion_service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
