@@ -2,7 +2,7 @@ spring:
     application:
         name: promotion-service
     profiles:
-        active: ${SPRING_PROFILES_ACTIVE:single}
+        active: ${SPRING_PROFILES_ACTIVE:integration}
 
 server:
     port: ${SERVER_PORT:8083}

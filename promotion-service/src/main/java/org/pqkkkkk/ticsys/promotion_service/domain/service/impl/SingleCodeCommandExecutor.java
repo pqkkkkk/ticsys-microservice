@@ -73,6 +73,9 @@ public class SingleCodeCommandExecutor extends PromotionCommandExecutor {
         if (newPromotionInfo.getEndDate() != null) {
             existingPromotion.setEndDate(newPromotionInfo.getEndDate());
         }
+        if(newPromotionInfo.getPromotionVisibility() != null) {
+            existingPromotion.setPromotionVisibility(newPromotionInfo.getPromotionVisibility());
+        }
 
         // Update voucher information
         if (newPromotionInfo.getVoucherType() != null) {
@@ -98,7 +101,7 @@ public class SingleCodeCommandExecutor extends PromotionCommandExecutor {
             existingPromotion.setEventDateId(newPromotionInfo.getEventDateId());
         }
 
-        // Update information of the editor and time
+        // Update information of the editor
         existingPromotion.setUpdatedBy(newPromotionInfo.getUpdatedBy());
     }
     @Override
@@ -116,14 +119,14 @@ public class SingleCodeCommandExecutor extends PromotionCommandExecutor {
             throw new IllegalArgumentException("Invalid promotion information");
         }
 
-        if(!eventService.isValidEventDate(newVoucherPromotionInfo.getEventId(), newVoucherPromotionInfo.getEventDateId())) {
+        if(!eventService.isValidEventDate(existingPromotion.getEventId(), existingPromotion.getEventDateId())) {
             throw new IllegalArgumentException("Invalid event date");
         }
-        if(!identityService.isValidUser(newVoucherPromotionInfo.getCreatedBy())) {
+        if(!identityService.isValidUser(existingPromotion.getUpdatedBy())) {
             throw new IllegalArgumentException("Invalid user");
         }
         
-        return promotionCommandDao.updateVoucherPromotion(newVoucherPromotionInfo);
+        return promotionCommandDao.updateVoucherPromotion(existingPromotion);
     }
     @Override
     public VoucherPromotionType getExecutorType() {

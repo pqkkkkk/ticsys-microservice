@@ -127,4 +127,94 @@ public class Request {
                 .build();
         }
     }
+
+    public record UpdateVoucherPromotion(
+        @NotNull(message = "Promotion ID cannot be null")
+        Long voucherPromotionId,
+
+        VoucherPromotionType type,
+
+        String promotionName,
+
+        String promotionDescription,
+
+        VoucherType voucherType,
+
+        Double voucherValueByPercentage,
+
+        Double voucherValueByAmount,
+
+        Integer numberOfCodes,
+
+        @Min(value = 1, message = "Max applied ticket count per code must be at least 1")
+        Integer maxAppliedTicketCountPerCode,
+
+        VoucherPromotionVisibility visibility,
+
+        LocalDateTime startDate,
+        LocalDateTime endDate,
+
+        Long eventDateId,
+
+        @NotNull(message = "Updater ID cannot be null")
+        Long updatedBy
+    ){
+        public VoucherPromotion toEntity(){
+            return VoucherPromotion.builder()
+                .id(voucherPromotionId)
+                .promotionName(promotionName)
+                .promotionDescription(promotionDescription)
+                .voucherPromotionType(type)
+                .voucherType(voucherType)
+                .voucherValueByPercentage(voucherValueByPercentage)
+                .voucherValueByAmount(voucherValueByAmount)
+                .numberOfCodes(numberOfCodes)
+                .maxAppliedTicketCountPerCode(maxAppliedTicketCountPerCode)
+                .promotionVisibility(visibility)
+                .startDate(startDate)
+                .endDate(endDate)
+                .eventDateId(eventDateId)
+                .updatedBy(updatedBy)
+            .build();
+        }
+    }
+
+    public record UpdateSingleCodeVoucherPromotion(
+        @NotNull(message = "Code value cannot be null")
+        @NotBlank(message = "Code value cannot be blank")
+        String codeValue,
+
+        @NotNull(message = "Max applied order per user cannot be null")
+        @Min(value = 1, message = "Max applied order per user must be at least 1")
+        Integer maxAppliedOrderPerUser,
+        
+        @NotNull(message = "Min ticket quantity per order to apply cannot be null")
+        @Min(value = 0, message = "Min ticket quantity per order to apply must be at least 0")
+        Integer minTicketQuantityPerOrderToApply,
+
+        @NotNull(message = "Max ticket quantity per order to apply cannot be null")
+        @Min(value = 1, message = "Max ticket quantity per order to apply must be at least 1")
+        Integer maxTicketQuantityPerOrderToApply
+    ){
+        public SingleCodePromotionInfo toEntity(){
+            return SingleCodePromotionInfo.builder()
+                .codeValue(codeValue)
+                .maxAppliedOrderPerUser(maxAppliedOrderPerUser)
+                .minTicketQuantityPerOrderToApply(minTicketQuantityPerOrderToApply)
+                .maxTicketQuantityPerOrderToApply(maxTicketQuantityPerOrderToApply)
+                .build();
+        }
+    }
+
+    public record UpdateBulkCodeVoucherPromotion(
+        @NotNull(message = "Number of codes cannot be null")
+        @NotBlank(message = "Number of codes cannot be blank")
+        String codePrefix
+    ){
+        public BulkCodePromotionInfo toEntity(){
+            return BulkCodePromotionInfo.builder()
+                .codePrefix(codePrefix)
+                .build();
+        }
+    }
 }

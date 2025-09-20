@@ -9,6 +9,7 @@ option java_outer_classname = "EventServiceProto";
 // Service definition
 service EventService {
     rpc ValidateEvent(ValidateEventRequest) returns (ValidateEventResponse);
+    rpc ValidateEventDate(ValidateEventDateRequest) returns (ValidateEventDateResponse);
     rpc ReverseTicketsAndCalculateSubtotal(ReverseTicketsAndCalculateSubtotalRequest)
         returns (ReverseTicketsAndCalculateSubtotalResponse);
 }
@@ -17,6 +18,14 @@ message ValidateEventRequest {
     int64 event_id = 1;
 }
 message ValidateEventResponse {
+    bool is_valid = 1;
+    string message = 2; // Additional information if needed
+}
+message ValidateEventDateRequest {
+    int64 event_id = 1;
+    int64 event_date_id = 2;
+}
+message ValidateEventDateResponse {
     bool is_valid = 1;
     string message = 2; // Additional information if needed
 }

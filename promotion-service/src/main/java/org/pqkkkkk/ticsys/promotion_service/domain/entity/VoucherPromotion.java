@@ -9,6 +9,7 @@ import org.pqkkkkk.ticsys.promotion_service.domain.Constants.VoucherPromotionTyp
 import org.pqkkkkk.ticsys.promotion_service.domain.Constants.VoucherPromotionVisibility;
 import org.pqkkkkk.ticsys.promotion_service.domain.Constants.VoucherType;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -109,10 +110,10 @@ public class VoucherPromotion {
     Long updatedBy;
 
     // Only for Single Code Promotion
-    @OneToOne(mappedBy = "voucherPromotion")
+    @OneToOne(mappedBy = "voucherPromotion", cascade = CascadeType.ALL, orphanRemoval = true)
     SingleCodePromotionInfo singleCodePromotionInfo;
 
     // Only for Bulk Code Promotion
-    @OneToMany(mappedBy = "voucherPromotion")
+    @OneToMany(mappedBy = "voucherPromotion", cascade = CascadeType.ALL, orphanRemoval = true)
     List<BulkCodePromotionInfo> bulkCodePromotionInfos;
 }

@@ -4,6 +4,7 @@ import java.util.Map;
 
 import org.pqkkkkk.ticsys.promotion_service.controller.rest.dto.DTO.VoucherPromotionDto;
 import org.pqkkkkk.ticsys.promotion_service.controller.rest.dto.Request.CreateVoucherPromotion;
+import org.pqkkkkk.ticsys.promotion_service.controller.rest.dto.Request.UpdateVoucherPromotion;
 import org.pqkkkkk.ticsys.promotion_service.controller.rest.dto.Response.ApiResponse;
 import org.pqkkkkk.ticsys.promotion_service.domain.Constants.VoucherPromotionType;
 import org.pqkkkkk.ticsys.promotion_service.domain.entity.VoucherPromotion;
@@ -15,10 +16,10 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import jakarta.validation.Valid;
 
 @RequestMapping("/api/v1/promotion")
@@ -55,7 +56,7 @@ public class PromotionApi {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<VoucherPromotionDto>> updateVoucherPromotion(@PathVariable Long id, @Valid @RequestBody CreateVoucherPromotion request){
+    public ResponseEntity<ApiResponse<VoucherPromotionDto>> updateVoucherPromotion(@PathVariable Long id, @Valid @RequestBody UpdateVoucherPromotion request){
         PromotionCommandExecutor executor = getExecutor(request.type());
 
         VoucherPromotion voucherPromotionToUpdate = request.toEntity();

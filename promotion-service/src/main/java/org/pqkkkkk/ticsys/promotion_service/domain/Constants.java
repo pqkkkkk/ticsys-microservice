@@ -1,6 +1,8 @@
 package org.pqkkkkk.ticsys.promotion_service.domain;
 
 public class Constants {
+    public static final Integer SUBFIX_OF_BULK_CODE_LENGTH = 8;
+
     public enum VoucherPromotionType {
         SINGLE_CODE,
         BULK_CODE

@@ -1,8 +1,14 @@
 package org.pqkkkkk.ticsys.promotion_service.domain.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+import org.pqkkkkk.ticsys.promotion_service.domain.Constants;
 import org.pqkkkkk.ticsys.promotion_service.domain.Constants.VoucherPromotionType;
 import org.pqkkkkk.ticsys.promotion_service.domain.Constants.VoucherType;
 import org.pqkkkkk.ticsys.promotion_service.domain.dao.PromotionCommandDao;
+import org.pqkkkkk.ticsys.promotion_service.domain.entity.BulkCodePromotionInfo;
 import org.pqkkkkk.ticsys.promotion_service.domain.entity.VoucherPromotion;
 import org.pqkkkkk.ticsys.promotion_service.domain.service.PromotionCommandExecutor;
 import org.pqkkkkk.ticsys.promotion_service.domain.service.PromotionQueryService;
@@ -43,6 +49,28 @@ public class BulkCodeCommandExecutor extends PromotionCommandExecutor {
         }
         return true;
     }
+    private List<BulkCodePromotionInfo> generateRandomCodes(int numberOfCodes, String codePrefix) {
+        Random random = new Random();
+
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        
+        int subFixLength = Constants.SUBFIX_OF_BULK_CODE_LENGTH;
+
+        List<BulkCodePromotionInfo> bulkCodes = new ArrayList<>();
+
+        for (int i = 0; i < numberOfCodes; i++) {
+            StringBuilder codeBuilder = new StringBuilder(codePrefix);
+            for (int j = 0; j < subFixLength; j++) {
+                codeBuilder.append(characters.charAt(random.nextInt(characters.length())));
+            }
+            bulkCodes.add(BulkCodePromotionInfo.builder()
+                            .codePrefix(codePrefix)
+                            .codeValue(codeBuilder.toString())
+                            .isUsed(false)
+                            .build());
+        }
+        return bulkCodes;
+    }
     @Override
     @Transactional
     public VoucherPromotion createVoucherPromotion(VoucherPromotion voucherPromotion) {
@@ -55,7 +83,16 @@ public class BulkCodeCommandExecutor extends PromotionCommandExecutor {
         if(!identityService.isValidUser(voucherPromotion.getCreatedBy())) {
             throw new IllegalArgumentException("Invalid user");
         }
-        
+
+        // Generate random codes for each BulkCodePromotionInfo
+        List<BulkCodePromotionInfo> bulkCodes = generateRandomCodes(voucherPromotion.getNumberOfCodes(),
+                                                voucherPromotion.getBulkCodePromotionInfos().get(0).getCodePrefix());
+        voucherPromotion.setBulkCodePromotionInfos(bulkCodes);
+
+        for (BulkCodePromotionInfo info : voucherPromotion.getBulkCodePromotionInfos()) {
+            info.setVoucherPromotion(voucherPromotion); // Set the relationship
+        }
+
         voucherPromotion.setTotalAppliedTicketCount(voucherPromotion.getMaxAppliedTicketCountPerCode() * voucherPromotion.getBulkCodePromotionInfos().size());
         
         return promotionCommandDao.createVoucherPromotion(voucherPromotion);
@@ -74,6 +111,9 @@ public class BulkCodeCommandExecutor extends PromotionCommandExecutor {
         }
         if (newPromotionInfo.getEndDate() != null) {
             existingPromotion.setEndDate(newPromotionInfo.getEndDate());
+        }
+        if(newPromotionInfo.getPromotionVisibility() != null) {
+            existingPromotion.setPromotionVisibility(newPromotionInfo.getPromotionVisibility());
         }
 
         // Update voucher information

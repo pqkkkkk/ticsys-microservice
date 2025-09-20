@@ -52,6 +52,13 @@
 	</dependencyManagement>
 
 	<dependencies>
+		<!-- gRPC Common dependency -->
+		<dependency>
+			<groupId>org.pqkkkkk.ticsys</groupId>
+			<artifactId>grpc-common</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+		
 		<!--Spring boot dependencies-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
