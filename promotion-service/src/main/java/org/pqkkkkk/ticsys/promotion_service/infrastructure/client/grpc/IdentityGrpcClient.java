@@ -4,12 +4,14 @@ import org.pqkkkk.ticsys.grpc.user.IdentityServiceGrpc.IdentityServiceBlockingSt
 import org.pqkkkk.ticsys.grpc.user.IsValidUserRequest;
 import org.pqkkkk.ticsys.grpc.user.IsValidUserResponse;
 import org.pqkkkkk.ticsys.promotion_service.domain.service.external.IdentityService;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Service;
 
 import io.grpc.StatusRuntimeException;
 import net.devh.boot.grpc.client.inject.GrpcClient;
 
 @Service
+@Profile("!test")
 public class IdentityGrpcClient implements IdentityService {
     @GrpcClient("identity-service")
     private IdentityServiceBlockingStub blockingStub;

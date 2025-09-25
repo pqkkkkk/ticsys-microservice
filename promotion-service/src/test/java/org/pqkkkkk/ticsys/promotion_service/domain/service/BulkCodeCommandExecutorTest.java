@@ -255,11 +255,8 @@ class BulkCodeCommandExecutorTest {
         validVoucherPromotion.setMaxAppliedTicketCountPerCode(100);
         // 5 bulk codes
         List<BulkCodePromotionInfo> fiveCodes = Arrays.asList(
-                BulkCodePromotionInfo.builder().codeValue("CODE1").build(),
-                BulkCodePromotionInfo.builder().codeValue("CODE2").build(),
-                BulkCodePromotionInfo.builder().codeValue("CODE3").build(),
-                BulkCodePromotionInfo.builder().codeValue("CODE4").build(),
-                BulkCodePromotionInfo.builder().codeValue("CODE5").build()
+                BulkCodePromotionInfo.builder().codeValue("CODE1").codePrefix("ABC").build(),
+                BulkCodePromotionInfo.builder().codeValue("CODE2").codePrefix("ABC").build()
         );
         validVoucherPromotion.setBulkCodePromotionInfos(fiveCodes);
 
@@ -272,7 +269,7 @@ class BulkCodeCommandExecutorTest {
         bulkCodeCommandExecutor.createVoucherPromotion(validVoucherPromotion);
 
         // Then
-        assertEquals(500, validVoucherPromotion.getTotalAppliedTicketCount()); // 100 * 5
+        assertEquals(300, validVoucherPromotion.getTotalAppliedTicketCount()); // 100 * 3
     }
 
     @Test

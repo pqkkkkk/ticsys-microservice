@@ -1,6 +1,6 @@
 spring:
     profiles:
-        active: integration
+        active: single
 
 server:
     port: 8085

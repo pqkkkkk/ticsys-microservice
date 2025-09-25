@@ -57,7 +57,7 @@ public class BulkCodeCommandExecutor extends PromotionCommandExecutor {
         int subFixLength = Constants.SUBFIX_OF_BULK_CODE_LENGTH;
 
         List<BulkCodePromotionInfo> bulkCodes = new ArrayList<>();
-
+        
         for (int i = 0; i < numberOfCodes; i++) {
             StringBuilder codeBuilder = new StringBuilder(codePrefix);
             for (int j = 0; j < subFixLength; j++) {

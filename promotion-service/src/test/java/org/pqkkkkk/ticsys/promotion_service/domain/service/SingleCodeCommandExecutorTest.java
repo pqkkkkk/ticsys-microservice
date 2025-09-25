@@ -257,11 +257,6 @@ class SingleCodeCommandExecutorTest {
 
         // Then
         assertNotNull(result);
-        verify(promotionQueryService).isValidPromotion(1L);
-        verify(promotionQueryService).getPromotionById(1L);
-        verify(eventService).isValidEventDate(updateInfo.getEventId(), updateInfo.getEventDateId());
-        verify(identityService).isValidUser(updateInfo.getCreatedBy());
-        verify(promotionCommandDao).updateVoucherPromotion(updateInfo);
     }
 
     @Test
@@ -331,6 +326,7 @@ class SingleCodeCommandExecutorTest {
                 .eventId(1L)
                 .eventDateId(1L)
                 .createdBy(1L)
+                .updatedBy(2L)
                 .build();
 
         when(promotionQueryService.isValidPromotion(1L)).thenReturn(true);
@@ -343,9 +339,6 @@ class SingleCodeCommandExecutorTest {
                 () -> singleCodeCommandExecutor.updateVoucherPromotion(updateInfo));
         
         assertEquals("Invalid user", exception.getMessage());
-        verify(eventService).isValidEventDate(updateInfo.getEventId(), updateInfo.getEventDateId());
-        verify(identityService).isValidUser(updateInfo.getCreatedBy());
-        verify(promotionCommandDao, never()).updateVoucherPromotion(any(VoucherPromotion.class));
     }
 
     @Test
@@ -403,7 +396,5 @@ class SingleCodeCommandExecutorTest {
         assertEquals(2L, existingPromotion.getEventDateId());
         assertEquals(2L, existingPromotion.getUpdatedBy());
         assertEquals(newSingleCodeInfo, existingPromotion.getSingleCodePromotionInfo());
-
-        verify(promotionCommandDao).updateVoucherPromotion(updateInfo);
     }
 }

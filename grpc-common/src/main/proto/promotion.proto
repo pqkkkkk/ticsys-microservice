@@ -8,25 +8,23 @@ option java_outer_classname = "PromotionServiceProto";
 
 // Service definition
 service PromotionService {
-    rpc ValidatePromotion(ValidatePromotionRequest) returns (ValidatePromotionResponse);
-    rpc UpdatePromotionInventory(UpdatePromotionInventoryRequest) returns (UpdatePromotionInventoryResponse);
+    rpc ApplyPromotion (ApplyPromotionRequest) returns (ApplyPromotionResponse);
 }
 
-// Request and response messages for ValidatePromotion
-message ValidatePromotionRequest {
-    string promotion_code = 1; // The promotion code to validate
+// Request message for applying a promotion
+message ApplyPromotionRequest {
+    int64 promotion_id = 1; // The promotion ID to be applied
+    int64 user_id = 2; // The ID of the user applying the promotion
+    int64 event_id = 3; // The ID of the event for which the promotion is applied
+    int64 event_date_id = 4; // The ID of the specific date of the event
+    double original_price = 5; // The original price before applying the promotion
+    string voucher_code = 6; // The voucher code if applicable
+    string voucher_type = 8; // The type of voucher (e.g., SINGLE_CODE, BULK_CODE)
+    int32 ticket_quantity = 7; // The quantity of tickets or items
 }
-message ValidatePromotionResponse {
-    bool is_valid = 1; // Indicates if the promotion code is valid
-    string message = 2; // Additional message, e.g., error description if invalid
-}
-// Request and response messages for UpdatePromotionInventory
-message UpdatePromotionInventoryRequest {
-    string promotion_code = 1; // The promotion code for which inventory is being updated
-    int32 quantity = 2; // The quantity to update the inventory by (can be positive or negative)
-}
-
-message UpdatePromotionInventoryResponse {
-    bool success = 1; // Indicates if the inventory update was successful
-    string message = 2; // Additional message, e.g., error description if the update failed
+// Response message for applying a promotion
+message ApplyPromotionResponse {
+    bool success = 1; // Indicates if the promotion was successfully applied
+    string message = 2; // Additional message or error information
+    double discount_amount = 3; // The amount of discount applied
 }

@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import org.pqkkkkk.ticsys.order_service.domain.Constants.OrderStatus;
 import org.pqkkkkk.ticsys.order_service.domain.Constants;
 import org.pqkkkkk.ticsys.order_service.domain.dao.OrderCommandDao;
+import org.pqkkkkk.ticsys.order_service.domain.entity.ApplyPromotionInfo;
 import org.pqkkkkk.ticsys.order_service.domain.entity.Order;
 import org.pqkkkkk.ticsys.order_service.domain.usecase.EventService;
 import org.pqkkkkk.ticsys.order_service.domain.usecase.NotificationService;
@@ -83,8 +84,16 @@ public class OrderServiceImpl implements OrderService {
         if(order.getExpiredAt().isBefore(LocalDateTime.now())) {
             throw new IllegalArgumentException("Order is expired");
         }
-
-        order.setTotal(order.getSubTotal() - promotionService.applyPromotion());
+        
+        ApplyPromotionInfo applyPromotionInfo = ApplyPromotionInfo.builder()
+            .promotionId(existentOrderInfo.getPromotionId())
+            .userId(order.getUserId())
+            .eventId(order.getEventId())
+            .eventDateId(order.getEventDateId())
+            .originalPrice(order.getSubTotal())
+            .ticketQuantity(order.getTicketInOrders().stream().mapToInt(t -> t.getQuantity()).sum())
+            .build();
+        order.setTotal(order.getSubTotal() - promotionService.applyPromotion(applyPromotionInfo));
 
         paymentService.processPayment(order);
 
