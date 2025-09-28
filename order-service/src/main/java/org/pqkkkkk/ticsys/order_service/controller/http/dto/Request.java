@@ -65,11 +65,14 @@ public class Request {
     public record PayOrderRequest(
         @NotNull(message = "Invalid order id")
         Long orderId,
-        String paymentMethod
+        String paymentMethod,
+        Long promotionId,
+        String voucherCode
     ){
         public Order toEntity() {
             Order order = new Order();
             order.setOrderId(this.orderId);
+            order.setPromotionId(this.promotionId);
 
             return order;
         }

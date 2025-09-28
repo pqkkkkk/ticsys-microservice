@@ -6,6 +6,7 @@ import org.pqkkkkk.ticsys.order_service.controller.http.dto.Request.PayOrderRequ
 import org.pqkkkkk.ticsys.order_service.controller.http.dto.Request.ReserveOrderRequest;
 import org.pqkkkkk.ticsys.order_service.controller.http.dto.Response.ApiResponse;
 import org.pqkkkkk.ticsys.order_service.domain.entity.Order;
+import org.pqkkkkk.ticsys.order_service.domain.entity.PayOrderCommand;
 import org.pqkkkkk.ticsys.order_service.domain.usecase.OrderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,9 +41,14 @@ public class OrderApi {
     }
     @PutMapping("/payment")
     public ResponseEntity<ApiResponse<OrderDTO>> payOrder(@Valid @RequestBody PayOrderRequest request) {
-        Order exinstentOrderInfo = request.toEntity();
-
-        Order order = orderService.payOrder(exinstentOrderInfo);
+        Order orderInfo = request.toEntity();
+        PayOrderCommand command = PayOrderCommand.builder()
+            .order(orderInfo)
+            .paymentMethod(request.paymentMethod())
+            .voucherCode(request.voucherCode())
+            .build();
+            
+        Order order = orderService.payOrder(command);
 
         OrderDTO dto = OrderDTO.fromEntity(order);
 
