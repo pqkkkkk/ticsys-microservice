@@ -58,7 +58,7 @@ public class BulkCodeVoucherServiceTest {
     public void isApplicable_ValidUnusedCode_ReturnsTrue() {
         VoucherPromotion voucherPromotion = VoucherPromotion.builder()
                 .bulkCodePromotionInfos(List.of(
-                    BulkCodePromotionInfo.builder().codePrefix("PROMO").codeValue("123").isUsed(false).build()
+                    BulkCodePromotionInfo.builder().codePrefix("PROMO").codeValue("PROMO123").isUsed(false).build()
                 ))
                 .build();
 

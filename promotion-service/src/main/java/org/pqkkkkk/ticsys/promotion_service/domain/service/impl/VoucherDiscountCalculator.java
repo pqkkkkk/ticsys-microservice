@@ -32,7 +32,7 @@ public class VoucherDiscountCalculator implements PromotionCalculatorService {
     }
     @Override
     @Transactional
-    public Double calculateDiscount(ApplyPromotionInfo applyPromotionInfo) {
+    public Double useVoucherPromotion(ApplyPromotionInfo applyPromotionInfo) {
         VoucherPromotion promotion = promotionQueryService.getValidPromotion(applyPromotionInfo.getPromotionId());
 
         if(!getVoucherService(promotion.getVoucherPromotionType()).isApplicable(promotion, applyPromotionInfo)){
@@ -48,6 +48,19 @@ public class VoucherDiscountCalculator implements PromotionCalculatorService {
         if(!updateResult){
             throw new RuntimeException("Failed to update voucher status after applying discount");
         }
+        
+        return discount;
+    }
+    @Override
+    public Double calculateDiscount(ApplyPromotionInfo applyPromotionInfo) {
+        VoucherPromotion promotion = promotionQueryService.getValidPromotion(applyPromotionInfo.getPromotionId());
+
+        if(!getVoucherService(promotion.getVoucherPromotionType()).isApplicable(promotion, applyPromotionInfo)){
+            throw new IllegalStateException("Voucher is not valid for the given conditions");
+        }
+
+        Double discount = getVoucherService(promotion.getVoucherPromotionType())
+                .calculateVoucherDiscount(promotion, applyPromotionInfo);
         
         return discount;
     }

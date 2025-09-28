@@ -3,45 +3,33 @@ package org.pqkkkkk.ticsys.order_service.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+
+import java.time.LocalDateTime;
 
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.pqkkkkk.ticsys.order_service.domain.Constants.OrderStatus;
 import org.pqkkkkk.ticsys.order_service.domain.dao.OrderCommandDao;
 import org.pqkkkkk.ticsys.order_service.domain.entity.Order;
+import org.pqkkkkk.ticsys.order_service.domain.entity.PayOrderCommand;
 import org.pqkkkkk.ticsys.order_service.domain.usecase.NotificationService;
 import org.pqkkkkk.ticsys.order_service.domain.usecase.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestConfiguration;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Primary;
 import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.context.bean.override.mockito.MockitoBean;
 
 @SpringBootTest
 @ActiveProfiles("test")
 public class PayOrderTest {
-    
-    @TestConfiguration
-    static class TestConfig {
-        @Bean
-        @Primary
-        public NotificationService notificationService() {
-            NotificationService mockNotificationService = mock(NotificationService.class);
-            when(mockNotificationService.sendOrderConfirmation(any(Order.class))).thenReturn(true);
-            return mockNotificationService;
-        }
-    }
-    
     @Autowired
     private OrderService orderService;
     @Autowired
     private OrderCommandDao orderCommandDao;
-    @Autowired
+    @MockitoBean
+    @Qualifier("notificationMockClient")
     private NotificationService notificationService;
 
     @Test
@@ -51,8 +39,13 @@ public class PayOrderTest {
                 .orderId(999L) // Assuming 999L is an invalid order ID
                 .build();
 
+        PayOrderCommand command = PayOrderCommand.builder()
+            .order(invalidOrderInfo)
+            .paymentMethod("CREDIT_CARD")
+            .voucherCode("DISCOUNT10")
+            .build();
         // Act & Assert
-        assertThrows(IllegalArgumentException.class, () -> orderService.payOrder(invalidOrderInfo));
+        assertThrows(IllegalArgumentException.class, () -> orderService.payOrder(command));
     }
 
     @Test
@@ -63,14 +56,23 @@ public class PayOrderTest {
                             .userId(1L)
                             .subTotal(100.0)
                             .orderStatus(OrderStatus.PENDING)
+                            .expiredAt(LocalDateTime.now().plusHours(1)) // 1 hour later
                             .build();
         orderCommandDao.addOrder(preparedOrder);
+
         Order validOrderInfo = Order.builder()
                 .orderId(preparedOrder.getOrderId())
+                .promotionId(1L)
                 .build();
+        
+        PayOrderCommand command = PayOrderCommand.builder()
+            .order(validOrderInfo)
+            .paymentMethod("CREDIT_CARD")
+            .voucherCode("DISCOUNT10")
+            .build();
 
         // Act
-        Order result = orderService.payOrder(validOrderInfo);
+        Order result = orderService.payOrder(command);
 
         // Assert
         assertNotNull(result);
@@ -81,6 +83,8 @@ public class PayOrderTest {
         ArgumentCaptor<Order> orderCaptor = ArgumentCaptor.forClass(Order.class);
         verify(notificationService).sendOrderConfirmation(orderCaptor.capture());
         assertEquals(preparedOrder.getOrderId(), orderCaptor.getValue().getOrderId());
+        assertEquals(OrderStatus.PAID, orderCaptor.getValue().getOrderStatus());
+        assertNotNull(orderCaptor.getValue().getPromotionId());
     }
 
 }

@@ -125,13 +125,13 @@ public class VoucherDiscountCalculatorTest {
     private void setupBulkCodePercentagePromotion() {
         BulkCodePromotionInfo bulkCode1 = BulkCodePromotionInfo.builder()
                 .codePrefix("BULK15")
-                .codeValue("ABCD1234")
+                .codeValue("BULK15ABCD1234")
                 .isUsed(false)
                 .build();
         
         BulkCodePromotionInfo bulkCode2 = BulkCodePromotionInfo.builder()
                 .codePrefix("BULK15")
-                .codeValue("EFGH5678")
+                .codeValue("BULK15EFGH5678")
                 .isUsed(false)
                 .build();
         
@@ -162,13 +162,13 @@ public class VoucherDiscountCalculatorTest {
     private void setupBulkCodeAmountPromotion() {
         BulkCodePromotionInfo bulkCode1 = BulkCodePromotionInfo.builder()
                 .codePrefix("BULK25")
-                .codeValue("QWER9012")
+                .codeValue("BULK25QWER9012")
                 .isUsed(false)
                 .build();
         
         BulkCodePromotionInfo bulkCode2 = BulkCodePromotionInfo.builder()
                 .codePrefix("BULK25")
-                .codeValue("TYUI3456")
+                .codeValue("BULK25TYUI3456")
                 .isUsed(false)
                 .build();
         
@@ -227,7 +227,7 @@ public class VoucherDiscountCalculatorTest {
     }
     
     @Test
-    void testCalculateDiscount_SingleCodePercentage_Success() {
+    void testUseVoucherPromotion_SingleCodePercentage_Success() {
         // Given
         ApplyPromotionInfo applyInfo = ApplyPromotionInfo.builder()
                 .promotionId(singleCodePercentagePromotion.getId())
@@ -241,7 +241,7 @@ public class VoucherDiscountCalculatorTest {
                 .build();
         
         // When
-        Double discount = voucherDiscountCalculator.calculateDiscount(applyInfo);
+        Double discount = voucherDiscountCalculator.useVoucherPromotion(applyInfo);
         
         // Then
         assertNotNull(discount);
@@ -253,7 +253,7 @@ public class VoucherDiscountCalculatorTest {
     }
     
     @Test
-    void testCalculateDiscount_SingleCodeAmount_Success() {
+    void testUseVoucherPromotion_SingleCodeAmount_Success() {
         // Given
         ApplyPromotionInfo applyInfo = ApplyPromotionInfo.builder()
                 .promotionId(singleCodeAmountPromotion.getId())
@@ -267,7 +267,7 @@ public class VoucherDiscountCalculatorTest {
                 .build();
         
         // When
-        Double discount = voucherDiscountCalculator.calculateDiscount(applyInfo);
+        Double discount = voucherDiscountCalculator.useVoucherPromotion(applyInfo);
         
         // Then
         assertNotNull(discount);
@@ -275,7 +275,7 @@ public class VoucherDiscountCalculatorTest {
     }
     
     @Test
-    void testCalculateDiscount_SingleCodeAmount_WithMaxTicketLimit() {
+    void testUseVoucherPromotion_SingleCodeAmount_WithMaxTicketLimit() {
         // Given
         ApplyPromotionInfo applyInfo = ApplyPromotionInfo.builder()
                 .promotionId(singleCodeAmountPromotion.getId())
@@ -289,7 +289,7 @@ public class VoucherDiscountCalculatorTest {
                 .build();
         
         // When
-        Double discount = voucherDiscountCalculator.calculateDiscount(applyInfo);
+        Double discount = voucherDiscountCalculator.useVoucherPromotion(applyInfo);
         
         // Then
         assertNotNull(discount);
@@ -297,7 +297,7 @@ public class VoucherDiscountCalculatorTest {
     }
     
     @Test
-    void testCalculateDiscount_BulkCodePercentage_Success() {
+    void testUseVoucherPromotion_BulkCodePercentage_Success() {
         // Given
         ApplyPromotionInfo applyInfo = ApplyPromotionInfo.builder()
                 .promotionId(bulkCodePercentagePromotion.getId())
@@ -311,7 +311,7 @@ public class VoucherDiscountCalculatorTest {
                 .build();
         
         // When
-        Double discount = voucherDiscountCalculator.calculateDiscount(applyInfo);
+        Double discount = voucherDiscountCalculator.useVoucherPromotion(applyInfo);
         
         // Then
         assertNotNull(discount);
@@ -319,7 +319,7 @@ public class VoucherDiscountCalculatorTest {
     }
     
     @Test
-    void testCalculateDiscount_BulkCodeAmount_Success() {
+    void testUseVoucherPromotion_BulkCodeAmount_Success() {
         // Given
         ApplyPromotionInfo applyInfo = ApplyPromotionInfo.builder()
                 .promotionId(bulkCodeAmountPromotion.getId())
@@ -333,7 +333,7 @@ public class VoucherDiscountCalculatorTest {
                 .build();
         
         // When
-        Double discount = voucherDiscountCalculator.calculateDiscount(applyInfo);
+        Double discount = voucherDiscountCalculator.useVoucherPromotion(applyInfo);
         
         // Then
         assertNotNull(discount);
@@ -341,7 +341,7 @@ public class VoucherDiscountCalculatorTest {
     }
     
     @Test
-    void testCalculateDiscount_BulkCodeAmount_WithMaxTicketLimit() {
+    void testUseVoucherPromotion_BulkCodeAmount_WithMaxTicketLimit() {
         // Given
         ApplyPromotionInfo applyInfo = ApplyPromotionInfo.builder()
                 .promotionId(bulkCodeAmountPromotion.getId())
@@ -355,7 +355,7 @@ public class VoucherDiscountCalculatorTest {
                 .build();
         
         // When
-        Double discount = voucherDiscountCalculator.calculateDiscount(applyInfo);
+        Double discount = voucherDiscountCalculator.useVoucherPromotion(applyInfo);
         
         // Then
         assertNotNull(discount);
@@ -363,7 +363,7 @@ public class VoucherDiscountCalculatorTest {
     }
     
     @Test
-    void testCalculateDiscount_InvalidPromotionId_ThrowsException() {
+    void testUseVoucherPromotion_InvalidPromotionId_ThrowsException() {
         // Given
         ApplyPromotionInfo applyInfo = ApplyPromotionInfo.builder()
                 .promotionId(999L) // Non-existent promotion
@@ -378,11 +378,11 @@ public class VoucherDiscountCalculatorTest {
         
         // When & Then
         assertThrows(IllegalArgumentException.class,
-            () -> voucherDiscountCalculator.calculateDiscount(applyInfo));
+            () -> voucherDiscountCalculator.useVoucherPromotion(applyInfo));
     }
     
     @Test
-    void testCalculateDiscount_ExpiredPromotion_ThrowsException() {
+    void testUseVoucherPromotion_ExpiredPromotion_ThrowsException() {
         // Given
         ApplyPromotionInfo applyInfo = ApplyPromotionInfo.builder()
                 .promotionId(expiredPromotion.getId())
@@ -397,11 +397,11 @@ public class VoucherDiscountCalculatorTest {
         
         // When & Then
         assertThrows(IllegalArgumentException.class,
-            () -> voucherDiscountCalculator.calculateDiscount(applyInfo));;
+            () -> voucherDiscountCalculator.useVoucherPromotion(applyInfo));;
     }
     
     @Test
-    void testCalculateDiscount_InvalidVoucherCode_ThrowsException() {
+    void testUseVoucherPromotion_InvalidVoucherCode_ThrowsException() {
         // Given
         ApplyPromotionInfo applyInfo = ApplyPromotionInfo.builder()
                 .promotionId(singleCodePercentagePromotion.getId())
@@ -416,13 +416,13 @@ public class VoucherDiscountCalculatorTest {
         
         // When & Then
         IllegalStateException exception = assertThrows(IllegalStateException.class,
-                () -> voucherDiscountCalculator.calculateDiscount(applyInfo));
+                () -> voucherDiscountCalculator.useVoucherPromotion(applyInfo));
         
         assertEquals("Voucher is not valid for the given conditions", exception.getMessage());
     }
     
     @Test
-    void testCalculateDiscount_InsufficientTicketQuantity_ThrowsException() {
+    void testUseVoucherPromotion_InsufficientTicketQuantity_ThrowsException() {
         // Given
         ApplyPromotionInfo applyInfo = ApplyPromotionInfo.builder()
                 .promotionId(singleCodeAmountPromotion.getId())
@@ -437,13 +437,13 @@ public class VoucherDiscountCalculatorTest {
         
         // When & Then
         IllegalStateException exception = assertThrows(IllegalStateException.class,
-                () -> voucherDiscountCalculator.calculateDiscount(applyInfo));
+                () -> voucherDiscountCalculator.useVoucherPromotion(applyInfo));
         
         assertEquals("Voucher is not valid for the given conditions", exception.getMessage());
     }
     
     @Test
-    void testCalculateDiscount_UsedBulkCode_ThrowsException() {
+    void testUseVoucherPromotion_UsedBulkCode_ThrowsException() {
         // Given - First use the bulk code
         ApplyPromotionInfo firstUseInfo = ApplyPromotionInfo.builder()
                 .promotionId(bulkCodeAmountPromotion.getId())
@@ -456,7 +456,7 @@ public class VoucherDiscountCalculatorTest {
                 .ticketQuantity(3)
                 .build();
         
-        voucherDiscountCalculator.calculateDiscount(firstUseInfo);
+        voucherDiscountCalculator.useVoucherPromotion(firstUseInfo);
         
         // Given - Try to use the same bulk code again
         ApplyPromotionInfo secondUseInfo = ApplyPromotionInfo.builder()
@@ -472,13 +472,13 @@ public class VoucherDiscountCalculatorTest {
         
         // When & Then
         IllegalStateException exception = assertThrows(IllegalStateException.class,
-                () -> voucherDiscountCalculator.calculateDiscount(secondUseInfo));
+                () -> voucherDiscountCalculator.useVoucherPromotion(secondUseInfo));
         
         assertEquals("Voucher is not valid for the given conditions", exception.getMessage());
     }
     
     @Test
-    void testCalculateDiscount_ExhaustedSingleCodePromotion_ThrowsException() {
+    void testUseVoucherPromotion_ExhaustedSingleCodePromotion_ThrowsException() {
         // Given - Set the promotion to exhausted state
         singleCodePercentagePromotion.setCurrentAppliedTicketCount(100); // Same as max
         singleCodeCommandExecutor.updateVoucherPromotion(singleCodePercentagePromotion);
@@ -496,13 +496,13 @@ public class VoucherDiscountCalculatorTest {
         
         // When & Then
         IllegalStateException exception = assertThrows(IllegalStateException.class,
-                () -> voucherDiscountCalculator.calculateDiscount(applyInfo));
+                () -> voucherDiscountCalculator.useVoucherPromotion(applyInfo));
         
         assertEquals("Voucher is not valid for the given conditions", exception.getMessage());
     }
     
     @Test
-    void testCalculateDiscount_MultipleApplications_UpdatesCountCorrectly() {
+    void testUseVoucherPromotion_MultipleApplications_UpdatesCountCorrectly() {
         // Given - Apply first discount
         ApplyPromotionInfo firstApplyInfo = ApplyPromotionInfo.builder()
                 .promotionId(singleCodePercentagePromotion.getId())
@@ -516,7 +516,7 @@ public class VoucherDiscountCalculatorTest {
                 .build();
         
         // When
-        Double firstDiscount = voucherDiscountCalculator.calculateDiscount(firstApplyInfo);
+        Double firstDiscount = voucherDiscountCalculator.useVoucherPromotion(firstApplyInfo);
         
         // Then
         assertNotNull(firstDiscount);
@@ -535,7 +535,7 @@ public class VoucherDiscountCalculatorTest {
                 .build();
         
         // When
-        Double secondDiscount = voucherDiscountCalculator.calculateDiscount(secondApplyInfo);
+        Double secondDiscount = voucherDiscountCalculator.useVoucherPromotion(secondApplyInfo);
         
         // Then
         assertNotNull(secondDiscount);

@@ -7,6 +7,7 @@ import org.pqkkkkk.ticsys.order_service.domain.Constants;
 import org.pqkkkkk.ticsys.order_service.domain.dao.OrderCommandDao;
 import org.pqkkkkk.ticsys.order_service.domain.entity.ApplyPromotionInfo;
 import org.pqkkkkk.ticsys.order_service.domain.entity.Order;
+import org.pqkkkkk.ticsys.order_service.domain.entity.PayOrderCommand;
 import org.pqkkkkk.ticsys.order_service.domain.usecase.EventService;
 import org.pqkkkkk.ticsys.order_service.domain.usecase.NotificationService;
 import org.pqkkkkk.ticsys.order_service.domain.usecase.OrderQueryService;
@@ -17,6 +18,7 @@ import org.pqkkkkk.ticsys.order_service.domain.usecase.IdentityService;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -73,31 +75,34 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Order payOrder(Order existentOrderInfo) {
+    @Transactional
+    public Order payOrder(PayOrderCommand command) {
 
-        if(!orderQueryService.isValidOrder(existentOrderInfo.getOrderId())) {
+        if(!orderQueryService.isValidOrder(command.getOrder().getOrderId())) {
             throw new IllegalArgumentException("Invalid order");
         }
 
-        Order order = orderQueryService.getOrderById(existentOrderInfo.getOrderId());
+        Order order = orderQueryService.getOrderById(command.getOrder().getOrderId());
 
         if(order.getExpiredAt().isBefore(LocalDateTime.now())) {
             throw new IllegalArgumentException("Order is expired");
         }
         
         ApplyPromotionInfo applyPromotionInfo = ApplyPromotionInfo.builder()
-            .promotionId(existentOrderInfo.getPromotionId())
+            .promotionId(command.getOrder().getPromotionId())
             .userId(order.getUserId())
             .eventId(order.getEventId())
             .eventDateId(order.getEventDateId())
             .originalPrice(order.getSubTotal())
             .ticketQuantity(order.getTicketInOrders().stream().mapToInt(t -> t.getQuantity()).sum())
+            .voucherCode(command.getVoucherCode())
             .build();
         order.setTotal(order.getSubTotal() - promotionService.applyPromotion(applyPromotionInfo));
 
         paymentService.processPayment(order);
 
         order.setOrderStatus(OrderStatus.PAID);
+        order.setPromotionId(command.getOrder().getPromotionId());
         orderCommandDao.updateOrder(order);
 
         notificationService.sendOrderConfirmation(order);

@@ -55,6 +55,9 @@ public class SingleCodeCommandExecutor extends PromotionCommandExecutor {
         if(!identityService.isValidUser(voucherPromotion.getCreatedBy())) {
             throw new IllegalArgumentException("Invalid user");
         }
+
+        // Initialize current applied ticket count to 0
+        voucherPromotion.setCurrentAppliedTicketCount(0);
         
         return promotionCommandDao.createVoucherPromotion(voucherPromotion);
     }

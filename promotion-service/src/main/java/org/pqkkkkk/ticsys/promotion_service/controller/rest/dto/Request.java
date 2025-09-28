@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import org.pqkkkkk.ticsys.promotion_service.domain.Constants.VoucherPromotionType;
 import org.pqkkkkk.ticsys.promotion_service.domain.Constants.VoucherPromotionVisibility;
 import org.pqkkkkk.ticsys.promotion_service.domain.Constants.VoucherType;
+import org.pqkkkkk.ticsys.promotion_service.domain.entity.ApplyPromotionInfo;
 import org.pqkkkkk.ticsys.promotion_service.domain.entity.BulkCodePromotionInfo;
 import org.pqkkkkk.ticsys.promotion_service.domain.entity.SingleCodePromotionInfo;
 import org.pqkkkkk.ticsys.promotion_service.domain.entity.VoucherPromotion;
@@ -214,6 +215,35 @@ public class Request {
         public BulkCodePromotionInfo toEntity(){
             return BulkCodePromotionInfo.builder()
                 .codePrefix(codePrefix)
+                .build();
+        }
+    }
+
+    public record GetDiscountAmountRequest(
+        @NotNull(message = "Promotion ID cannot be null")
+        Long promotionId,
+
+        @NotNull(message = "Ticket quantity cannot be null")
+        @Min(value = 1, message = "Ticket quantity must be at least 1")
+        Integer ticketQuantity,
+
+        @NotNull(message = "Total amount cannot be null")
+        @Min(value = 0, message = "Total amount must be at least 0")
+        Double originalPrice,
+
+        @NotNull(message = "Voucher code cannot be null")
+        String voucherCode,
+
+        @NotNull(message = "Voucher type cannot be null")
+        VoucherType voucherType
+    ){
+        public ApplyPromotionInfo toEntity(){
+            return ApplyPromotionInfo.builder()
+                .promotionId(promotionId)
+                .ticketQuantity(ticketQuantity)
+                .originalPrice(originalPrice)
+                .voucherCode(voucherCode)
+                .voucherType(voucherType.name())
                 .build();
         }
     }

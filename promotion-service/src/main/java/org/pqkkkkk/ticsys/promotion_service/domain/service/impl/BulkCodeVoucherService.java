@@ -15,12 +15,15 @@ public class BulkCodeVoucherService implements VoucherService {
     public BulkCodeVoucherService(BulkCodePromotionInfoDao bulkCodeVoucherDao) {
         this.bulkCodeVoucherDao = bulkCodeVoucherDao;
     }
+    private BulkCodePromotionInfo findBulkCodeInfo(VoucherPromotion voucherPromotion, ApplyPromotionInfo applyPromotionInfo) {
+        return voucherPromotion.getBulkCodePromotionInfos().stream()
+                                .filter(i -> (i.getCodeValue()).equals(applyPromotionInfo.getVoucherCode()))
+                                .findFirst()
+                                .orElse(null);
+    }
     @Override
     public boolean isApplicable(VoucherPromotion voucherPromotion, ApplyPromotionInfo applyPromotionInfo) {
-        BulkCodePromotionInfo info = voucherPromotion.getBulkCodePromotionInfos().stream()
-                                                        .filter(i -> (i.getCodePrefix() + i.getCodeValue()).equals(applyPromotionInfo.getVoucherCode()))
-                                                        .findFirst()
-                                                        .orElse(null);
+        BulkCodePromotionInfo info = findBulkCodeInfo(voucherPromotion, applyPromotionInfo);
 
         return info != null && info.getIsUsed() == false;
     }
@@ -49,10 +52,7 @@ public class BulkCodeVoucherService implements VoucherService {
 
     @Override
     public boolean markVoucherAsUsed(VoucherPromotion voucherPromotion, ApplyPromotionInfo applyPromotionInfo) {
-        BulkCodePromotionInfo info = voucherPromotion.getBulkCodePromotionInfos().stream()
-                            .filter(i -> (i.getCodePrefix() + i.getCodeValue()).equals(applyPromotionInfo.getVoucherCode()))
-                            .findFirst()
-                            .orElse(null);
+        BulkCodePromotionInfo info = findBulkCodeInfo(voucherPromotion, applyPromotionInfo);
                             
         info.setIsUsed(true);
 

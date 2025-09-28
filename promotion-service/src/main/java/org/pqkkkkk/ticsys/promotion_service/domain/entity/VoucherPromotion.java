@@ -26,6 +26,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Builder.Default;
 import lombok.experimental.FieldDefaults;
 
 @Entity
@@ -70,7 +71,9 @@ public class VoucherPromotion {
     Integer totalAppliedTicketCount;
 
     @Column(name = "current_applied_ticket_count")
-    Integer currentAppliedTicketCount;
+    @Min(value = 0, message = "Current applied ticket count must be non-negative")
+    @Default
+    Integer currentAppliedTicketCount = 0;
 
     @Column(name = "max_applied_ticket_count_per_code")
     Integer maxAppliedTicketCountPerCode;

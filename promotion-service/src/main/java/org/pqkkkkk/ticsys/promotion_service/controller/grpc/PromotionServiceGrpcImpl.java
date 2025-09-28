@@ -7,9 +7,11 @@ import org.pqkkkkk.ticsys.promotion_service.domain.entity.ApplyPromotionInfo;
 import org.pqkkkkk.ticsys.promotion_service.domain.service.PromotionCalculatorService;
 
 import io.grpc.stub.StreamObserver;
+import lombok.extern.slf4j.Slf4j;
 import net.devh.boot.grpc.server.service.GrpcService;
 
 @GrpcService
+@Slf4j
 public class PromotionServiceGrpcImpl extends PromotionServiceImplBase {
     private final PromotionCalculatorService promotionCalculatorService;
 
@@ -19,9 +21,11 @@ public class PromotionServiceGrpcImpl extends PromotionServiceImplBase {
     @Override
     public void applyPromotion(ApplyPromotionRequest request,
             StreamObserver<ApplyPromotionResponse> response){
-        
+
+        log.info("Received promotion application request with promotionId: {}, voucherCode: {}", request.getPromotionId(), request.getVoucherCode());
+
         ApplyPromotionInfo applyPromotionInfo = convertRequestToEntity(request);
-        Double discount = promotionCalculatorService.calculateDiscount(applyPromotionInfo);
+        Double discount = promotionCalculatorService.useVoucherPromotion(applyPromotionInfo);
 
         ApplyPromotionResponse responseMessage = ApplyPromotionResponse.newBuilder()
                 .setMessage("Promotion applied successfully")
